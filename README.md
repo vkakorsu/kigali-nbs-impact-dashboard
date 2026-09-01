@@ -11,7 +11,7 @@ Built as a pre-contract demonstration for the IISD RFP "Consultancy Service for 
 - **8 to 12 indicators from the PRD.** Ten implemented. Eight from Table 1, plus riparian buffer and agroforestry as data-ready Year 2 additions, each flagged core or proposed, with illustrative values shaped from published SUNCASA reporting.
 - **Bilingual by structure.** English and Kinyarwanda ship in the same static page and switch instantly. Approved translations from IISD and partners drop into content files with zero code changes.
 - **FMES interoperability seam.** A working adapter maps FMES-shaped exports into the dashboard with provenance intact. See [INTEROPERABILITY.md](INTEROPERABILITY.md).
-- **Simple back-end, no CMS platform.** A ~300 KB form-based editing screen ([Sveltia CMS](https://github.com/sveltia/sveltia-cms)) mounted at `/admin` edits the plain data files in this repository. No server, no database, full audit trail.
+- **Simple back-end, no CMS platform.** A form-based editing screen at `/admin` shows the same fields used to manage indicators, metadata, explanatory text, and stories. Saving is turned off on the public demonstration. A ~300 KB git-backed editor ([Sveltia CMS](https://github.com/sveltia/sveltia-cms)) is at `/git-editor` for technical demonstration. Production for RFA is spreadsheet first. No server, no database.
 - **Host-anywhere artifact.** The build output is a folder of static files. It runs on the free demo host today and on RFA infrastructure at the National Data Center tomorrow, unchanged. See [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Quick start
@@ -27,7 +27,7 @@ npm test           # pipeline tests (CSV, CRS transform, FMES adapter)
 
 Three paths, by increasing technical comfort:
 
-1. **Form-based (demonstration).** Open `/admin`, sign in with GitHub, edit an indicator value or story in a form, save. Every save is a version-controlled commit on this repository. A rebuild of the public site follows only when the host is connected to the repository. On the evaluation site, treat `/admin` as a demonstration of the editor. After handover, RFA's production path is spreadsheet first, as the proposal describes.
+1. **Form-based (demonstration).** Open `/admin` to see the indicator, metadata, and story fields filled with the live prototype data. Saving is turned off on the evaluation site so visitors cannot change the published dashboard. A git-backed form editor is at `/git-editor` and signs in with a GitHub personal access token. After handover, RFA's production path is spreadsheet first, as the proposal describes.
 2. **Spreadsheet.** Maintain `data/indicators.csv` or `data/indicators.xlsx` (same columns as the export). Run `npm run ingest`, which merges values by indicator id, validates everything, and rebuilds. Export the current values any time with `npm run export`.
 3. **FMES export.** Drop an approved FMES export in place and run `npm run fmes:import -- --apply`. Values update with FMES provenance attached.
 
@@ -40,8 +40,8 @@ data/                 Canonical data: indicators, time series, sites, stories, F
 scripts/              Ingest, export, FMES adapter, CRS transform, tests
 src/lib/              Types, i18n dictionaries, theme definitions
 src/components/       Cards, metadata blocks, React islands (map, chart, toggle)
-src/pages/            Landing, themes, indicators, map, stories, learn, methodology, about-data
-public/admin/         Form-based editing screen (Sveltia CMS)
+src/pages/            Landing, themes, indicators, map, stories, learn, methodology, about-data, admin
+public/git-editor/    Optional git-backed form editor (Sveltia CMS, token sign-in)
 ```
 
 ## Design notes

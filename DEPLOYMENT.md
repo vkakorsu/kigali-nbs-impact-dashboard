@@ -62,4 +62,4 @@ docker build -t dashboard . && docker run -p 8080:80 dashboard
 
 ## Security posture
 
-Read-only public site. No authentication, no personal data, no server-side code, no credentials stored anywhere in the artifact. The editing screen at `/admin` authenticates against the repository host, not against the dashboard, so the public site has no attack surface beyond static file serving. Hardening headers ship in both `nginx.conf` and `vercel.json`.
+Read-only public site. No authentication, no personal data, no server-side code, no credentials stored anywhere in the artifact. The demonstration editing screen at `/admin` is static HTML with saving turned off. The optional git-backed editor at `/git-editor` authenticates against GitHub with a personal access token, not against the dashboard, so the public site has no attack surface beyond static file serving. Hardening headers ship in both `nginx.conf` and `vercel.json`.

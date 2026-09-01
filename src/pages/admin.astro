@@ -1,0 +1,333 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import { themeHex } from "../components/art/palette";
+import {
+  indicators,
+  stories,
+  formatValue,
+  type SourceClass,
+} from "../lib/data";
+import { getTheme } from "../lib/themes";
+
+const chipStyles: Record<SourceClass, string> = {
+  FMES: "bg-river/10 text-river border-river/30",
+  "SUNCASA monitoring": "bg-highland/10 text-highland border-highland/30",
+  National: "bg-ochre/10 text-ochre border-ochre/30",
+  Public: "bg-amber/10 text-amber border-amber/30",
+};
+
+const fieldClass =
+  "w-full rounded-lg border border-ink/20 bg-mist/40 px-3 py-2 text-sm text-ink cursor-not-allowed";
+const labelClass =
+  "block text-[0.7rem] uppercase tracking-[0.1em] font-semibold text-ink/70 mb-1";
+---
+
+<Base
+  title="Simple editing screen"
+  description="Demonstration of the simple back end for indicators, metadata, explanatory text, and stories. Saving is disabled on the public prototype."
+  noindex
+>
+  <section class="max-w-6xl mx-auto px-4 pt-10 pb-28">
+    <p class="eyebrow text-highland mb-2">
+      <T en="Simple back end" rw="Uburyo bworoshye bwo kuvugurura" />
+    </p>
+    <h1 class="headline text-3xl md:text-4xl mb-3">
+      <T
+        en="Edit indicators, metadata, and stories"
+        rw="Vugurura ibipimo, metadata, n'inkuru"
+      />
+    </h1>
+    <p class="text-ink/75 measure mb-4">
+      <T
+        en="The terms of reference asked for simple back-end functionality sufficient for manual or semi-manual management of indicators, metadata, explanatory text, and visuals, without a full content management system. This screen is that demonstration. The values below are the live prototype data."
+        rw="Iyi mbonerahamwe yerekana uburyo bworoshye bwo kuvugurura ibipimo, metadata, n'inkuru, nta sisitemu yuzuye yo gucunga ibirimo. Imibare iri hano ni yo iri ku mbonerahamwe ya none."
+      />
+    </p>
+    <div class="card-surface p-5 mb-10" style="transform:none;box-shadow:none;">
+      <p class="text-sm text-ink/85 leading-relaxed measure">
+        <T
+          en="Saving is turned off on this public demonstration so evaluation cannot change the published site. After handover, RFA's production path is spreadsheet first: data owners keep figures in CSV or Excel, and a documented command validates and publishes them. A git-backed form editor remains available for technical demonstration."
+          rw="Kubika ntibikora kuri iyi mbonerahamwe rusange kugira ngo isuzuma ridahindura urubuga. Nyuma yo gutanga, RFA ikoresha uburyo bwa spreadsheet: abafite imibare bayikora muri CSV cyangwa Excel."
+        />
+      </p>
+    </div>
+
+    <h2 class="headline text-2xl mb-4">
+      <T en="Indicators and metadata" rw="Ibipimo na metadata" />
+    </h2>
+    <p class="text-sm text-ink/70 mb-5">
+      {indicators.length}
+      <T en="indicators in the current catalogue." rw="ibipimo biri mu rutonde." />
+    </p>
+
+    <div class="grid gap-3 mb-12">
+      {
+        indicators.map((indicator, index) => {
+          const theme = getTheme(indicator.theme);
+          return (
+            <details
+              class="rounded-xl border border-(--rule) bg-[#fffdf8] open:border-highland/30"
+              open={index === 0}
+            >
+              <summary class="cursor-pointer list-none px-5 py-4 flex flex-wrap items-center gap-3">
+                <span
+                  class="w-2.5 h-2.5 rotate-45 rounded-[1px] shrink-0"
+                  style={`background:${themeHex[theme.slug]};`}
+                  aria-hidden="true"
+                />
+                <span class="font-semibold text-highland-deep">
+                  <T en={indicator.name_en} rw={indicator.name_rw} />
+                </span>
+                <span class="tnum text-sm font-semibold">
+                  {formatValue(indicator.value)}
+                  <span class="font-normal text-ink/70"> {indicator.unit_en}</span>
+                </span>
+                <span class={`chip ${chipStyles[indicator.source_class]}`}>
+                  {indicator.source_class}
+                </span>
+                {indicator.illustrative && (
+                  <span class="text-xs text-ink/70">
+                    <T en="Illustrative value" rw="Umubare w'urugero" />
+                  </span>
+                )}
+              </summary>
+              <div class="px-5 pb-5 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label class={labelClass} for={`name-en-${indicator.id}`}>
+                    Name (English)
+                  </label>
+                  <input
+                    id={`name-en-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.name_en}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`name-rw-${indicator.id}`}>
+                    Name (Kinyarwanda)
+                  </label>
+                  <input
+                    id={`name-rw-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.name_rw}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`value-${indicator.id}`}>
+                    Latest value
+                  </label>
+                  <input
+                    id={`value-${indicator.id}`}
+                    class={`${fieldClass} tnum`}
+                    value={indicator.value === null ? "" : String(indicator.value)}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`unit-${indicator.id}`}>
+                    Unit
+                  </label>
+                  <input
+                    id={`unit-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.unit_en}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`source-${indicator.id}`}>
+                    Source class
+                  </label>
+                  <input
+                    id={`source-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.source_class}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`provider-${indicator.id}`}>
+                    Responsible provider
+                  </label>
+                  <input
+                    id={`provider-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.provider}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`updated-${indicator.id}`}>
+                    Date of latest update
+                  </label>
+                  <input
+                    id={`updated-${indicator.id}`}
+                    class={`${fieldClass} tnum`}
+                    value={indicator.latest_update ?? ""}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`freq-${indicator.id}`}>
+                    Update frequency
+                  </label>
+                  <input
+                    id={`freq-${indicator.id}`}
+                    class={fieldClass}
+                    value={indicator.update_frequency}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class={labelClass} for={`why-${indicator.id}`}>
+                    Why this matters
+                  </label>
+                  <textarea
+                    id={`why-${indicator.id}`}
+                    class={`${fieldClass} min-h-20`}
+                    readonly
+                    tabindex="-1"
+                  >{indicator.why_en}</textarea>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class={labelClass} for={`caveats-${indicator.id}`}>
+                    Limitations and caveats
+                  </label>
+                  <textarea
+                    id={`caveats-${indicator.id}`}
+                    class={`${fieldClass} min-h-20`}
+                    readonly
+                    tabindex="-1"
+                  >{indicator.caveats_en}</textarea>
+                </div>
+                <div class="sm:col-span-2 flex items-center gap-2 text-sm">
+                  <input
+                    id={`illustrative-${indicator.id}`}
+                    type="checkbox"
+                    checked={indicator.illustrative}
+                    disabled
+                  />
+                  <label for={`illustrative-${indicator.id}`}>
+                    Illustrative value (keep on until validated against the SUNCASA data catalogue)
+                  </label>
+                </div>
+              </div>
+            </details>
+          );
+        })
+      }
+    </div>
+
+    <h2 class="headline text-2xl mb-4">
+      <T en="Stories" rw="Inkuru" />
+    </h2>
+    <div class="grid gap-3 mb-8">
+      {
+        stories.map((story, index) => {
+          const theme = getTheme(story.theme);
+          return (
+            <details
+              class="rounded-xl border border-(--rule) bg-[#fffdf8]"
+              open={index === 0}
+            >
+              <summary class="cursor-pointer list-none px-5 py-4 flex flex-wrap items-center gap-3">
+                <span
+                  class="w-2.5 h-2.5 rotate-45 rounded-[1px] shrink-0"
+                  style={`background:${themeHex[theme.slug]};`}
+                  aria-hidden="true"
+                />
+                <span class="font-semibold text-highland-deep">
+                  <T en={story.title_en} rw={story.title_rw} />
+                </span>
+                {story.illustrative && (
+                  <span class="text-xs text-ink/70">
+                    <T en="Illustrative story structure" rw="Inkuru y'urugero" />
+                  </span>
+                )}
+              </summary>
+              <div class="px-5 pb-5 grid gap-4">
+                <div>
+                  <label class={labelClass} for={`story-title-${story.id}`}>
+                    Title (English)
+                  </label>
+                  <input
+                    id={`story-title-${story.id}`}
+                    class={fieldClass}
+                    value={story.title_en}
+                    readonly
+                    tabindex="-1"
+                  />
+                </div>
+                <div>
+                  <label class={labelClass} for={`story-summary-${story.id}`}>
+                    Summary
+                  </label>
+                  <textarea
+                    id={`story-summary-${story.id}`}
+                    class={`${fieldClass} min-h-20`}
+                    readonly
+                    tabindex="-1"
+                  >{story.summary_en}</textarea>
+                </div>
+              </div>
+            </details>
+          );
+        })
+      }
+    </div>
+
+    <p class="text-sm text-ink/70 measure">
+      <T
+        en="A git-backed form editor, for technical demonstration only, is at"
+        rw="Uburyo bwo kuvugurura bushingiye kuri git, ku kugaragaza ubuhanga gusa, buri kuri"
+      />
+      {" "}
+      <a href="/git-editor">/git-editor</a>.
+      <T
+        en="It signs in with a GitHub personal access token. Production for RFA does not require GitHub."
+        rw="Bwinjira na GitHub personal access token. RFA ntabwo ikenera GitHub mu buryo bwo gukora."
+      />
+    </p>
+  </section>
+
+  <div
+    class="fixed bottom-0 inset-x-0 z-30 border-t border-(--rule) px-4 py-3"
+    style="background: rgba(250, 247, 240, 0.96); backdrop-filter: blur(8px);"
+  >
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <p class="text-sm text-ink/70">
+        <T
+          en="Demonstration only. Changes are not written on this public site."
+          rw="Igaragaza gusa. Impinduka ntizandikwa kuri uru rubuga rusange."
+        />
+      </p>
+      <button
+        type="button"
+        disabled
+        class="bg-highland/40 text-paper font-semibold px-5 py-2.5 rounded-lg cursor-not-allowed"
+      >
+        <T en="Save changes" rw="Bika impinduka" />
+      </button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
