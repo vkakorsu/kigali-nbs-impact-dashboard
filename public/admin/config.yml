@@ -1,7 +1,7 @@
 # Sveltia CMS configuration.
 # The admin screen edits the plain data files in this repository through
 # simple forms. No server, no database. Every save is a version-controlled
-# commit and the site rebuilds automatically.
+# commit. A public rebuild follows only when the host is connected to git.
 
 backend:
   name: github

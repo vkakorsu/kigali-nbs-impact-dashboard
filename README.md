@@ -27,7 +27,7 @@ npm test           # pipeline tests (CSV, CRS transform, FMES adapter)
 
 Three paths, by increasing technical comfort:
 
-1. **Form-based (recommended).** Open `/admin`, sign in, edit an indicator value or story in a form, save. The site rebuilds automatically. Every save is recorded and reversible.
+1. **Form-based (demonstration).** Open `/admin`, sign in with GitHub, edit an indicator value or story in a form, save. Every save is a version-controlled commit on this repository. A rebuild of the public site follows only when the host is connected to the repository. On the evaluation site, treat `/admin` as a demonstration of the editor. After handover, RFA's production path is spreadsheet first, as the proposal describes.
 2. **Spreadsheet.** Maintain `data/indicators.csv` or `data/indicators.xlsx` (same columns as the export). Run `npm run ingest`, which merges values by indicator id, validates everything, and rebuilds. Export the current values any time with `npm run export`.
 3. **FMES export.** Drop an approved FMES export in place and run `npm run fmes:import -- --apply`. Values update with FMES provenance attached.
 
@@ -51,3 +51,7 @@ The visual identity is anchored in imigongo, Rwanda's geometric art: charcoal in
 ## Honest labels
 
 Values shown are illustrative, shaped from published SUNCASA figures (for example the Year 2 tree planting total), and are labelled as such in the interface. Site locations are placeholders pending approved SUNCASA spatial data. Kinyarwanda text is a working draft demonstrating the bilingual structure, and approved translations are supplied by IISD and SUNCASA partners, as the RFP anticipates.
+
+## Evaluation and ownership
+
+This repository is public for the proposal period so the SUNCASA selection committee can inspect the source. It is a pre-contract demonstration, not a finished system. On award, ownership of code, configuration, and data transfers to the Rwanda Forestry Authority and SUNCASA partners.
