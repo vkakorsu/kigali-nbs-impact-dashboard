@@ -79,56 +79,42 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
       class="relative sticky top-0 z-40 border-b border-(--rule)"
       style="background: rgba(250, 247, 240, 0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
     >
-      <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center gap-3">
-        <a href="/" class="flex items-center gap-2.5 no-underline group min-w-0 flex-1 lg:flex-none">
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 64 64"
-            aria-hidden="true"
-            focusable="false"
-            class="shrink-0"
-          >
-            <rect width="64" height="64" rx="12" fill="#1a1714"></rect>
-            <path d="M32 8 L52 30 L32 52 L12 30 Z" fill="none" stroke="#d99a2b" stroke-width="4"></path>
-            <path d="M32 20 L42 30 L32 40 L22 30 Z" fill="#9b3d22"></path>
-            <path
-              d="M4 56 L18 46 L32 56 L46 46 L60 56"
-              fill="none"
-              stroke="#175943"
-              stroke-width="4"
-              stroke-linecap="square"></path>
-          </svg>
-          <span class="leading-tight min-w-0">
-            <span class="block font-semibold text-highland-deep text-sm group-hover:text-highland truncate">
-              <T en="Kigali NbS Impact Dashboard" rw="Imbonerahamwe y'ibisubizo bishingiye ku bidukikije i Kigali" />
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center gap-3 py-2.5">
+          <a href="/" class="flex items-center gap-2.5 no-underline group min-w-0 flex-1">
+            <svg
+              width="30"
+              height="30"
+              viewBox="0 0 64 64"
+              aria-hidden="true"
+              focusable="false"
+              class="shrink-0"
+            >
+              <rect width="64" height="64" rx="12" fill="#1a1714"></rect>
+              <path d="M32 8 L52 30 L32 52 L12 30 Z" fill="none" stroke="#d99a2b" stroke-width="4"></path>
+              <path d="M32 20 L42 30 L32 40 L22 30 Z" fill="#9b3d22"></path>
+              <path
+                d="M4 56 L18 46 L32 56 L46 46 L60 56"
+                fill="none"
+                stroke="#175943"
+                stroke-width="4"
+                stroke-linecap="square"></path>
+            </svg>
+            <span class="leading-tight min-w-0">
+              <span class="block font-semibold text-highland-deep text-sm sm:text-[0.95rem] group-hover:text-highland">
+                <T en="Kigali NbS Impact Dashboard" rw="Imbonerahamwe y'ibisubizo bishingiye ku bidukikije i Kigali" />
+              </span>
+              <span class="hidden sm:block text-[0.62rem] uppercase tracking-[0.14em] text-ink/70 font-medium">
+                SUNCASA &middot; <T en="Lower Nyabarongo watershed" rw="Ikibaya cyo hasi cya Nyabarongo" />
+              </span>
             </span>
-            <span class="hidden sm:block text-[0.62rem] uppercase tracking-[0.14em] text-ink/70 font-medium">
-              SUNCASA &middot; <T en="Lower Nyabarongo watershed" rw="Ikibaya cyo hasi cya Nyabarongo" />
-            </span>
-          </span>
-        </a>
+          </a>
 
-        <nav class="hidden lg:flex items-center gap-x-4 ml-auto" aria-label="Main">
-          {
-            nav.map((item) => (
-              <a
-                href={item.href}
-                aria-current={currentPath === item.href ? "page" : undefined}
-                class={`no-underline text-xs font-semibold uppercase tracking-[0.08em] pb-0.5 border-b-2 transition-colors hover:text-highland whitespace-nowrap ${
-                  currentPath === item.href
-                    ? "text-highland border-gold"
-                    : "text-ink/70 border-transparent"
-                }`}
-              >
-                <T en={t(item.key).en} rw={t(item.key).rw} />
-              </a>
-            ))
-          }
-          <LanguageToggle client:load />
-        </nav>
+          <div class="hidden lg:block shrink-0">
+            <LanguageToggle client:load />
+          </div>
 
-        <details id="site-menu" class="group lg:hidden shrink-0">
+          <details id="site-menu" class="group lg:hidden shrink-0">
           <summary class="menu-toggle list-none cursor-pointer w-11 h-11 grid place-items-center rounded-lg border border-ink/20 bg-paper text-highland-deep hover:border-highland/40 hover:bg-mist">
             <span class="sr-only group-open:hidden">
               <T en={t("openMenu").en} rw={t("openMenu").rw} />
@@ -185,6 +171,28 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
             </div>
           </nav>
         </details>
+        </div>
+
+        <nav
+          class="hidden lg:flex flex-wrap items-center gap-x-7 gap-y-2 border-t border-(--rule) pt-2.5 pb-3"
+          aria-label="Main"
+        >
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={currentPath === item.href ? "page" : undefined}
+                class={`no-underline text-xs font-semibold uppercase tracking-[0.08em] pb-0.5 border-b-2 transition-colors hover:text-highland ${
+                  currentPath === item.href
+                    ? "text-highland border-gold"
+                    : "text-ink/70 border-transparent"
+                }`}
+              >
+                <T en={t(item.key).en} rw={t(item.key).rw} />
+              </a>
+            ))
+          }
+        </nav>
       </div>
     </header>
 
