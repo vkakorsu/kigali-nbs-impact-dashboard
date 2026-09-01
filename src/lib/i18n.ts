@@ -83,6 +83,10 @@ export const ui: Record<string, Bilingual> = {
     en: "Kinyarwanda text on this prototype is a working draft. Approved translations are supplied by IISD and SUNCASA partners.",
     rw: "Inyandiko z'Ikinyarwanda kuri iyi porotipe ni imbanzirizamushinga. Ubusemuzi bwemejwe butangwa na IISD n'abafatanyabikorwa ba SUNCASA.",
   },
+  codesignNote: {
+    en: "This live site is a co-design starting point, not a finished system. Indicators, visual identity, and layout will be confirmed with the Rwanda Forestry Authority, the City of Kigali, and IISD during inception.",
+    rw: "Iyi mbonerahamwe ni intangiriro y'igishushanyo, si sisitemu yarangije. Ibipimo, ishusho, n'imiterere bizemezwa n'Ikigo cy'Amashyamba mu Rwanda, Umujyi wa Kigali, na IISD mu ntangiriro.",
+  },
   notFoundTitle: { en: "Page not found", rw: "Iyi paji ntibonetse" },
   notFoundBody: {
     en: "The page you are looking for does not exist. Use the navigation above or return to the dashboard.",

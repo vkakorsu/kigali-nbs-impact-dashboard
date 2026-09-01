@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import T from "../components/T.astro";
+import { t } from "../lib/i18n";
 ---
 
 <Base title="Methodology">
@@ -19,6 +20,13 @@ import T from "../components/T.astro";
     </p>
 
     <div class="grid gap-6">
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="A starting point, not a finished system" rw="Intangiriro, si sisitemu yarangije" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          <T en={t("codesignNote").en} rw={t("codesignNote").rw} />
+        </p>
+      </section>
+
       <section class="card-surface p-6 md:p-7">
         <h2 class="headline text-xl mb-3"><T en="How indicators are chosen" rw="Uko ibipimo bihitamo" /></h2>
         <p class="leading-relaxed text-sm measure">
