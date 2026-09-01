@@ -1,13 +1,11 @@
 # Sveltia CMS configuration.
-# The git-backed editor at /git-editor edits the plain data files
-# through simple forms. No server, no database. Every save is a
-# version-controlled commit. A public rebuild follows only when the
-# host is connected to git.
+# The admin screen at /admin edits the plain data files in this
+# repository through simple forms. No server, no database. Every save
+# is a version-controlled commit. A public rebuild follows only when
+# the host is connected to git.
 #
-# OAuth is disabled. The default Sveltia GitHub login uses Netlify as
-# an OAuth client, which 404s on a Vercel host. Token sign-in is the
-# supported method here. Evaluators should use /admin, where the same
-# fields are shown with saving turned off.
+# Token sign-in only. The default Sveltia GitHub button uses Netlify
+# as an OAuth client, which 404s on this Vercel host.
 
 backend:
   name: github

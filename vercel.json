@@ -17,12 +17,6 @@
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
-    },
-    {
-      "source": "/git-editor",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
-      ]
     }
   ]
 }
