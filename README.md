@@ -8,7 +8,7 @@ Built as a pre-contract demonstration for the IISD RFP "Consultancy Service for 
 
 - **MyPeg-inspired, indicator-driven, narrative-supported design.** Every indicator carries a plain-language name, a "why this matters" narrative, a definition, a source class, an update date, a responsible provider, and honest caveats.
 - **Four fixed communication themes.** Climate adaptation, environmental protection and resource management, gender equality and social inclusion, employment and economic opportunities.
-- **8 to 12 indicators from PRD Table 1.** Ten implemented, each flagged core or proposed, with illustrative values shaped from published SUNCASA reporting.
+- **8 to 12 indicators from the PRD.** Ten implemented. Eight from Table 1, plus riparian buffer and agroforestry as data-ready Year 2 additions, each flagged core or proposed, with illustrative values shaped from published SUNCASA reporting.
 - **Bilingual by structure.** English and Kinyarwanda ship in the same static page and switch instantly. Approved translations from IISD and partners drop into content files with zero code changes.
 - **FMES interoperability seam.** A working adapter maps FMES-shaped exports into the dashboard with provenance intact. See [INTEROPERABILITY.md](INTEROPERABILITY.md).
 - **Simple back-end, no CMS platform.** A ~300 KB form-based editing screen ([Sveltia CMS](https://github.com/sveltia/sveltia-cms)) mounted at `/admin` edits the plain data files in this repository. No server, no database, full audit trail.
