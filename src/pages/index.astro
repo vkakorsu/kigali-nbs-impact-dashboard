@@ -19,23 +19,25 @@ const headlines = themes.map((theme) => {
   return { theme, indicator: headline, count: themed.length };
 });
 
-// Programme at a glance, drawn from the indicator store.
+// Programme at a glance: only published Year 2 results and a
+// programme-design fact. Illustrative GESI and jobs figures stay on
+// their indicator pages, labelled as such.
 const glance = [
   {
     indicator: getIndicator("trees-planted"),
-    label: { en: "trees planted in the watershed", rw: "ibiti byatewe mu kibaya" },
+    label: { en: "trees and buffer plants in the watershed", rw: "ibiti n'ibimera byo ku nkengero mu kibaya" },
   },
   {
-    indicator: getIndicator("area-restored"),
-    label: { en: "hectares under restoration", rw: "hegitari zirimo gusubizwa ubuzima" },
+    indicator: getIndicator("riparian-buffer"),
+    label: { en: "hectares of riparian buffer restored", rw: "hegitari z'inkengero zasubijwe ubuzima" },
   },
   {
-    indicator: getIndicator("women-engaged"),
-    label: { en: "women and marginalized people engaged", rw: "abagore n'abatishoboye bafite uruhare" },
+    indicator: getIndicator("agroforestry-area"),
+    label: { en: "hectares of agroforestry established", rw: "hegitari z'ubuhinzi-mashyamba bwashyizweho" },
   },
   {
-    indicator: getIndicator("jobs-created"),
-    label: { en: "green jobs created", rw: "imirimo y'icyatsi yaremwe" },
+    indicator: getIndicator("flood-risk-mapping"),
+    label: { en: "micro-catchments in the lower Nyabarongo", rw: "udukibaya two hasi cya Nyabarongo" },
   },
 ];
 ---
@@ -116,8 +118,8 @@ const glance = [
       </div>
       <p class="text-xs text-paper/70 mt-8 leading-relaxed max-w-2xl">
         <T
-          en="Published SUNCASA Year 2 figures. Every number on this dashboard carries its source, date, and caveats. See the About the data page for the full register."
-          rw="Imibare yatangajwe mu mwaka wa 2 wa SUNCASA. Buri mubare kuri iyi mbonerahamwe ugaragaza inkomoko, itariki n'ibigomba kwitonderwa. Reba paji y'Ibyerekeye imibare kugira ngo ubone urutonde rwuzuye."
+          en="Headline figures from published SUNCASA Year 2 reporting, plus the programme's six micro-catchments. Illustrative values elsewhere on this prototype are labelled as such. See the About the data page for the full register."
+          rw="Imibare nyamukuru yaturutse mu raporo y'umwaka wa 2 wa SUNCASA, hamwe n'udukibaya dutandatu by'umushinga. Imibare y'urugero iri ahandi kuri iyi mbonerahamwe igaragazwa nk'urugero. Reba paji y'Ibyerekeye imibare kugira ngo ubone urutonde rwuzuye."
         />
       </p>
     </div>
@@ -155,7 +157,7 @@ const glance = [
                 class="inline-block eyebrow mt-3.5 group-hover:translate-x-0.5 transition-transform"
                 style={`color:${theme.color};`}
               >
-                {count} <T en="indicators" rw="imibare" /> &rarr;
+                {count} <T en={count === 1 ? "indicator" : "indicators"} rw="imibare" /> &rarr;
               </span>
             </span>
           </a>

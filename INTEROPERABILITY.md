@@ -4,7 +4,7 @@ How this dashboard is designed to work beside the Rwanda Forestry Authority's Fo
 
 ## Position: FMES is the system of record
 
-FMES is Rwanda's national forestry monitoring platform. It collects field data through a mobile app and web platform, records forest boundaries by GPS, automatically calculates 24 forestry indicators, and generates official reports including forest cut permits. It is credential-gated, custodianship sits with RFA, and it is currently undergoing an upgrade under the LuxDev-financed SFERE programme, after which the Ministry of Environment intends to make it mandatory for all reforestation actors.
+FMES is Rwanda's national forestry monitoring platform. It collects field data through a mobile app and web platform, records forest boundaries by GPS, calculates forestry indicators from that field data, and generates official reports including forest cut permits. It is credential-gated, custodianship sits with RFA, and it is currently undergoing an upgrade under the LuxDev-financed SFERE programme, after which the Ministry of Environment intends to make it mandatory for all reforestation actors.
 
 This dashboard takes the only sensible position available to an MVP-stage communication tool:
 

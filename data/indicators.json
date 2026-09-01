@@ -19,7 +19,7 @@
       "provider": "SUNCASA project team (IISD and WRI) with RFA",
       "definition_en": "Total hectares in the six lower Nyabarongo micro-catchments where afforestation, reforestation, riparian restoration, terracing, or improved management has been implemented under SUNCASA.",
       "why_en": "Restored land holds rainfall instead of shedding it. Every hectare brought under restoration or improved management reduces the flood and erosion pressure on the communities living downstream.",
-      "caveats_en": "Illustrative value shaped from published SUNCASA reporting. Final figures come from the SUNCASA data catalogue after validation.",
+      "caveats_en": "Illustrative composite of published Year 2 agroforestry (1,654 ha) and riparian buffer (362 ha) figures. The data catalogue may define restored area differently, so this number will be replaced after validation.",
       "illustrative": true
     },
     {
@@ -80,9 +80,9 @@
       "source_class": "SUNCASA monitoring",
       "source": "SUNCASA Year 2 reporting",
       "provider": "SUNCASA project team (IISD and WRI) with RFA and City of Kigali",
-      "definition_en": "Cumulative number of trees planted under SUNCASA in Kigali across afforestation, reforestation, agroforestry, riparian, and urban planting activities.",
+      "definition_en": "Cumulative number of trees and buffer plants reported under SUNCASA in Kigali across afforestation, reforestation, agroforestry, riparian, and urban planting activities.",
       "why_en": "Trees are the most visible promise of this programme. Counting them honestly, and following whether they survive, is how a promise becomes a forest.",
-      "caveats_en": "Published Year 2 cumulative figure. Survival rates are tracked separately and are not shown in this MVP.",
+      "caveats_en": "Published Year 2 cumulative of trees and buffer plants. Survival rates are tracked separately and are not shown in this MVP.",
       "illustrative": false
     },
     {
@@ -94,7 +94,7 @@
       "unit_en": "hectares",
       "unit_rw": "hegitari",
       "value": 1654,
-      "target": 1600,
+      "target": 1200,
       "trend": "up",
       "latest_update": "2026-03-31",
       "update_frequency": "quarterly",
@@ -103,7 +103,7 @@
       "provider": "SUNCASA project team (IISD and WRI) with RFA",
       "definition_en": "Hectares of farmland where trees have been integrated with crops under SUNCASA agroforestry support, combining production with soil protection.",
       "why_en": "Agroforestry feeds families while it holds the hillside together. It is where the environmental story and the livelihood story become the same story.",
-      "caveats_en": "Published Year 2 figure, ahead of target. Subject to validation against the data catalogue.",
+      "caveats_en": "Published Year 2 figure, more than 450 hectares ahead of the published target. Subject to validation against the data catalogue.",
       "illustrative": false
     },
     {

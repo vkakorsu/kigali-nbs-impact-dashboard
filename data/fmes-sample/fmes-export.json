@@ -1,5 +1,5 @@
 {
-  "$comment": "Illustrative FMES-shaped export payload. The real Forest Monitoring and Evaluation System (fmes.rfa.rw) is credential-gated and calculates 24 forestry indicators from field data. This sample mimics a plausible approved-data export so the fmes-adapter script can demonstrate the interoperability seam: FMES-shaped data in, dashboard indicator updates out, with FMES remaining the system of record. The actual export schema is confirmed with RFA during the inception FMES Interoperability Assessment.",
+  "$comment": "Illustrative FMES-shaped export payload. The real Forest Monitoring and Evaluation System (fmes.rfa.rw) is credential-gated and calculates forestry indicators from field data. This sample mimics a plausible approved-data export so the fmes-adapter script can demonstrate the interoperability seam: FMES-shaped data in, dashboard indicator updates out, with FMES remaining the system of record. The actual export schema is confirmed with RFA during the inception FMES Interoperability Assessment.",
   "system": "FMES",
   "custodian": "Rwanda Forestry Authority",
   "generated": "2026-08-15T00:00:00Z",
