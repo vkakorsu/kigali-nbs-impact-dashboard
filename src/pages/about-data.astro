@@ -1,0 +1,137 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import { themeHex } from "../components/art/palette";
+import { t } from "../lib/i18n";
+import { getTheme } from "../lib/themes";
+import { indicators, formatValue, type SourceClass } from "../lib/data";
+
+const chipStyles: Record<SourceClass, string> = {
+  FMES: "bg-river/10 text-river border-river/30",
+  "SUNCASA monitoring": "bg-highland/10 text-highland border-highland/30",
+  National: "bg-ochre/10 text-ochre border-ochre/30",
+  Public: "bg-amber/10 text-amber border-amber/30",
+};
+
+const sourceClasses: Array<{ name: SourceClass; description: string }> = [
+  {
+    name: "FMES",
+    description:
+      "The Rwanda Forestry Authority's Forest Monitoring and Evaluation System, the national system of record for forestry data. The dashboard consumes approved FMES exports and never redefines FMES indicators.",
+  },
+  {
+    name: "SUNCASA monitoring",
+    description:
+      "Data collected through the SUNCASA project's Performance Measurement Framework and environmental monitoring plans, reported by the project team and partners.",
+  },
+  {
+    name: "National",
+    description:
+      "Other approved national data sets, such as water quality series from the Rwanda Water Resources Board, used only where validated and data-ready.",
+  },
+  {
+    name: "Public",
+    description:
+      "Publicly available complementary data, such as satellite-derived vegetation cover, clearly labelled and used only for context.",
+  },
+];
+---
+
+<Base title="About the data">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <p class="eyebrow text-highland mb-2">
+      <T en="Full paperwork" rw="Inyandiko zuzuye" />
+    </p>
+    <h1 class="headline text-3xl md:text-4xl mb-3">
+      <T en={t("navAboutData").en} rw={t("navAboutData").rw} />
+    </h1>
+    <p class="text-ink/70 mb-10 measure">
+      <T
+        en="Every indicator on this dashboard carries its full paperwork: definition, source class, responsible provider, latest update, and honest caveats. This page gathers all of it in one place."
+        rw="Buri gipimo kuri iyi mbonerahamwe gifite inyandiko zacyo zuzuye: igisobanuro, icyiciro cy'inkomoko, utanga imibare, ivugururwa riheruka, n'ibigomba kwitonderwa."
+      />
+    </p>
+
+    <h2 class="headline text-2xl mb-5"><T en="The four source classes" rw="Ibyiciro bine by'inkomoko" /></h2>
+    <div class="grid gap-4 sm:grid-cols-2 mb-12" data-reveal>
+      {
+        sourceClasses.map((sourceClass) => (
+          <div class="card-surface p-5">
+            <span class={`chip ${chipStyles[sourceClass.name]}`}>
+              <span
+                class="inline-block w-2 h-2 rotate-45 rounded-[1px] bg-current"
+                aria-hidden="true"
+              />
+              {sourceClass.name}
+            </span>
+            <p class="text-sm leading-relaxed mt-3 text-ink/85">{sourceClass.description}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <h2 class="headline text-2xl mb-5"><T en="Full indicator register" rw="Urutonde rwuzuye rw'ibipimo" /></h2>
+    <div class="overflow-x-auto rounded-xl border border-(--rule) bg-[#fffdf8]">
+      <table class="w-full text-sm border-collapse min-w-[900px]">
+        <thead>
+          <tr class="bg-ink text-paper text-left">
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en="Indicator" rw="Igipimo" /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en="Theme" rw="Ingingo" /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en="Status" rw="Imiterere" /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en={t("latestValue").en} rw={t("latestValue").rw} /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en={t("sourceClass").en} rw={t("sourceClass").rw} /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en={t("responsibleProvider").en} rw={t("responsibleProvider").rw} /></th>
+            <th class="p-3 font-semibold text-[0.7rem] uppercase tracking-[0.1em]"><T en={t("latestUpdate").en} rw={t("latestUpdate").rw} /></th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            indicators.map((indicator, index) => {
+              const theme = getTheme(indicator.theme);
+              return (
+                <tr class={`border-t border-(--rule) ${index % 2 === 1 ? "bg-mist/40" : ""}`}>
+                  <td class="p-3 align-top">
+                    <a href={`/indicators/${indicator.id}`} class="font-semibold text-highland no-underline hover:underline">
+                      <T en={indicator.name_en} rw={indicator.name_rw} />
+                    </a>
+                    {indicator.illustrative && (
+                      <span class="block text-xs text-ink/70 mt-0.5">
+                        <T en="Illustrative value" rw="Umubare w'urugero" />
+                      </span>
+                    )}
+                  </td>
+                  <td class="p-3 align-top">
+                    <span class="inline-flex items-center gap-2">
+                      <span
+                        class="w-2.5 h-2.5 rotate-45 rounded-[1px] inline-block shrink-0"
+                        style={`background:${themeHex[theme.slug]};`}
+                        aria-hidden="true"
+                      />
+                      <T en={theme.short.en} rw={theme.short.rw} />
+                    </span>
+                  </td>
+                  <td class="p-3 align-top capitalize">{indicator.status}</td>
+                  <td class="p-3 align-top font-semibold tnum">
+                    {formatValue(indicator.value)} <span class="font-normal text-ink/70">{indicator.unit_en}</span>
+                  </td>
+                  <td class="p-3 align-top">
+                    <span class={`chip ${chipStyles[indicator.source_class]}`}>{indicator.source_class}</span>
+                  </td>
+                  <td class="p-3 align-top">{indicator.provider}</td>
+                  <td class="p-3 align-top tnum">{indicator.latest_update ?? "-"}</td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-sm text-ink/70 mt-6 measure">
+      <T
+        en="Definitions, update frequencies, and caveats for each indicator live on its own page. Data can be exported to CSV for use in Excel or any analysis tool, and the full data structure is documented for handover."
+        rw="Ibisobanuro, uburyo bw'ivugururwa n'ibigomba kwitonderwa kuri buri gipimo biri ku ipaji yacyo. Imibare ishobora gusohorwa muri CSV ikoreshwe muri Excel cyangwa ikindi gikoresho."
+      />
+    </p>
+  </section>
+</Base>

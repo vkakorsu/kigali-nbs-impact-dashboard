@@ -1,0 +1,110 @@
+---
+import T from "./T.astro";
+import { t } from "../lib/i18n";
+import { getTheme } from "../lib/themes";
+import { formatValue, timeseries, type Indicator } from "../lib/data";
+import Sparkline from "./Sparkline.astro";
+
+interface Props {
+  indicator: Indicator;
+  compact?: boolean;
+}
+
+const { indicator, compact = false } = Astro.props;
+const theme = getTheme(indicator.theme);
+
+const points = (timeseries[indicator.id] ?? []).map((p) => p.value);
+
+const trendGlyph =
+  indicator.trend === "up"
+    ? "\u25B2"
+    : indicator.trend === "down"
+      ? "\u25BC"
+      : indicator.trend === "flat"
+        ? "\u25C6"
+        : "";
+---
+
+<article class="card-surface relative overflow-hidden p-5 flex flex-col gap-2.5">
+  <span
+    class="absolute inset-x-0 top-0 h-[3px]"
+    style={`background:${theme.color};`}
+    aria-hidden="true"></span>
+
+  <div class="flex items-start justify-between gap-3">
+    <p class="eyebrow" style={`color:${theme.color};`}>
+      <T en={theme.short.en} rw={theme.short.rw} />
+    </p>
+    <span
+      class={`chip shrink-0 ${
+        indicator.status === "proposed"
+          ? "bg-gold/15 text-amber border-gold/40"
+          : "bg-highland/10 text-highland border-highland/25"
+      }`}
+    >
+      <T
+        en={t(indicator.status === "proposed" ? "proposed" : "core").en}
+        rw={t(indicator.status === "proposed" ? "proposed" : "core").rw}
+      />
+    </span>
+  </div>
+
+  <h3 class="font-semibold leading-snug text-ink text-[0.95rem]">
+    <a href={`/indicators/${indicator.id}`} class="no-underline hover:underline text-inherit">
+      <T en={indicator.name_en} rw={indicator.name_rw} />
+    </a>
+  </h3>
+
+  <div class="flex items-end justify-between gap-3 mt-1">
+    <div>
+      <p class="headline tnum text-[2.1rem] leading-none text-ink">
+        {formatValue(indicator.value)}
+        {
+          indicator.trend !== "na" && (
+            <span
+              class="text-sm align-middle ml-1"
+              style={`color:${theme.color};`}
+              aria-hidden="true"
+            >
+              {trendGlyph}
+            </span>
+          )
+        }
+      </p>
+      <p class="text-xs text-ink/65 mt-1.5">
+        <T en={indicator.unit_en} rw={indicator.unit_rw} />
+        {
+          indicator.target !== null && (
+            <>
+              {" \u00B7 "}
+              <T en={t("target").en} rw={t("target").rw} />
+              <span class="tnum">: {formatValue(indicator.target)}</span>
+            </>
+          )
+        }
+      </p>
+    </div>
+    <Sparkline points={points} color={theme.color} width={104} height={34} class="shrink-0 mb-1" />
+  </div>
+
+  {
+    !compact && (
+      <p class="text-sm leading-relaxed text-ink/80">
+        {indicator.why_en.split(". ")[0]}.
+      </p>
+    )
+  }
+
+  <p class="text-[0.7rem] text-ink/70 mt-auto pt-2.5 border-t border-(--rule) tracking-wide">
+    {indicator.source_class}
+    {indicator.latest_update && <> {" \u00B7 "} <span class="tnum">{indicator.latest_update}</span></>}
+    {
+      indicator.illustrative && (
+        <>
+          {" \u00B7 "}
+          <T en={t("illustrative").en} rw={t("illustrative").rw} />
+        </>
+      )
+    }
+  </p>
+</article>

@@ -1,0 +1,109 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+---
+
+<Base title="Methodology">
+  <section class="max-w-4xl mx-auto px-4 py-10">
+    <p class="eyebrow text-highland mb-2">
+      <T en="Show the workings" rw="Erekana uko bikorwa" />
+    </p>
+    <h1 class="headline text-3xl md:text-4xl mb-3">
+      <T en="Methodology" rw="Uburyo bwakoreshejwe" />
+    </h1>
+    <p class="text-ink/70 mb-10 measure">
+      <T
+        en="A dashboard that asks to be trusted should show its own workings. This page explains how indicators are chosen, where data comes from, how the two languages work, and what this MVP deliberately does not do."
+        rw="Imbonerahamwe isaba kwizerwa igomba kwerekana uko ikora. Iyi paji isobanura uko ibipimo bihitamo, aho imibare ituruka, uko indimi ebyiri zikora, n'ibyo iyi MVP idakora nkana."
+      />
+    </p>
+
+    <div class="grid gap-6">
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="How indicators are chosen" rw="Uko ibipimo bihitamo" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          Indicators are drawn from the SUNCASA Kigali Indicator Catalogue and organized under the four
+          communication themes fixed in the product requirements: climate adaptation, environmental protection
+          and resource management, gender equality and social inclusion, and employment and economic
+          opportunities. Only data-ready indicators suitable for public communication are included, between 8
+          and 12 in total. Indicators marked proposed are options to confirm with stakeholders during the
+          inception phase, and nothing here is final until validated.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="Where the data comes from" rw="Aho imibare ituruka" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          Every indicator carries a source class from a fixed vocabulary: FMES (the Rwanda Forestry
+          Authority's Forest Monitoring and Evaluation System), SUNCASA project monitoring, other approved
+          national data sets, or publicly available complementary data. The dashboard never redefines an FMES
+          indicator and never duplicates FMES calculations or metadata structures. FMES remains the system of
+          record for forestry data, and this dashboard is the public communication layer beside it. No new
+          data is collected for this MVP, and values shown today are illustrative, shaped from published
+          SUNCASA reporting, pending the project data catalogue.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="How updates happen" rw="Uko ivugururwa rikorwa" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          Updates are manual or semi-manual by design, matching the MVP scope. An editor changes a value
+          through a simple form-based editing screen, or an analyst edits a CSV or Excel file, and the site
+          rebuilds. Every change is recorded with who, what, and when, because the data lives in version
+          control. There are no automated pipelines and no real-time feeds at this stage, which keeps the
+          system understandable and cheap to run.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="How the two languages work" rw="Uko indimi ebyiri zikora" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          Every piece of content has an English and a Kinyarwanda slot, and the language switch is instant
+          because both languages travel inside the same page. Kinyarwanda text on this prototype is a working
+          draft that demonstrates the structure. Approved translations are supplied by IISD and SUNCASA
+          partners and drop into the content files without any code changes, exactly as the terms of
+          reference anticipate.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 md:p-7">
+        <h2 class="headline text-xl mb-3"><T en="Maps and coordinates" rw="Amakarita n'ibipimo by'ahantu" /></h2>
+        <p class="leading-relaxed text-sm measure">
+          The map serves WGS84 GeoJSON, the web standard. National spatial data in Rwanda commonly uses
+          ITRF2005 / TM Rwanda, and the ingest pipeline documents and performs that transformation, so
+          approved FMES and national layers can be consumed without asking anyone to change how they work.
+          Map tiles come from OpenStreetMap with no API keys and no licence fees.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 md:p-7 relative overflow-hidden">
+        <span class="absolute inset-y-0 left-0 w-1 bg-ochre" aria-hidden="true"></span>
+        <h2 class="headline text-xl mb-3"><T en="What this MVP does not do" rw="Ibyo iyi MVP idakora" /></h2>
+        <ul class="text-sm leading-relaxed grid gap-1.5 pl-1">
+          {
+            [
+              "No real-time data or real-time monitoring",
+              "No predictive modelling or advanced analytics",
+              "No new data collection",
+              "No complex user interaction beyond viewing, scrolling, and simple navigation",
+              "No city-wide coverage beyond the SUNCASA intervention areas",
+              "No user accounts and no personal data collection of any kind",
+            ].map((item) => (
+              <li class="flex items-start gap-2.5">
+                <span
+                  class="inline-block w-1.5 h-1.5 rotate-45 rounded-[1px] bg-ochre shrink-0 mt-[7px]"
+                  aria-hidden="true"
+                />
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="text-sm leading-relaxed mt-4 text-ink/70 measure">
+          These boundaries come from the product requirements and are kept deliberately, so the MVP stays
+          honest, affordable, and easy to maintain while future phases stay possible.
+        </p>
+      </section>
+    </div>
+  </section>
+</Base>

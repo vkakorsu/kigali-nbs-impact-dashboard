@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import InterventionMap from "../components/InterventionMap";
+import ThemeGlyph from "../components/art/ThemeGlyph.astro";
+import { themeHex } from "../components/art/palette";
+import { t } from "../lib/i18n";
+import { themes } from "../lib/themes";
+import { sites } from "../lib/data";
+
+const districts = [...new Set(sites.features.map((f) => f.properties.district))].sort();
+const totalArea = sites.features.reduce((sum, f) => sum + (f.properties.area_ha ?? 0), 0);
+---
+
+<Base title="Map">
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <p class="eyebrow text-highland mb-2">
+      <T en="On the ground" rw="Aho bibera" />
+    </p>
+    <h1 class="headline text-3xl md:text-4xl mb-3">
+      <T en={t("interventionSites").en} rw={t("interventionSites").rw} />
+    </h1>
+    <p class="text-ink/70 measure mb-6">
+      <T
+        en="Each marker is a SUNCASA intervention site, colored by theme. Tap a marker for the intervention type and area. Locations are illustrative until approved SUNCASA spatial data is integrated. Geometry is served in WGS84, and national data in ITRF2005 / TM Rwanda is transformed on ingest, so approved FMES spatial layers drop straight in."
+        rw="Buri kimenyetso ni ahantu SUNCASA ikorera, gifite ibara ry'ingingo yaho. Kanda ikimenyetso urebe ubwoko bw'igikorwa n'ubuso. Aho hantu ni urugero kugeza imibare y'ahantu yemejwe ya SUNCASA yinjijwe."
+      />
+    </p>
+
+    <div class="flex flex-wrap gap-x-5 gap-y-2 mb-5 text-sm">
+      {
+        themes.map((theme) => (
+          <span class="chip bg-transparent">
+            <span
+              class="inline-block w-2.5 h-2.5 rotate-45 rounded-[1px] shrink-0"
+              style={`background:${themeHex[theme.slug]};`}
+              aria-hidden="true"
+            />
+            <ThemeGlyph theme={theme.slug} size={16} color={themeHex[theme.slug]} />
+            <T en={theme.short.en} rw={theme.short.rw} />
+          </span>
+        ))
+      }
+    </div>
+
+    <InterventionMap client:only="react" features={sites.features} />
+
+    <div class="grid gap-4 sm:grid-cols-3 mt-8" data-reveal>
+      <div class="card-surface p-5">
+        <p class="headline tnum text-4xl text-highland">{sites.features.length}</p>
+        <p class="text-sm text-ink/70 mt-1.5">
+          <T en="intervention sites shown (illustrative)" rw="ahantu h'ibikorwa hagaragajwe (urugero)" />
+        </p>
+      </div>
+      <div class="card-surface p-5">
+        <p class="headline tnum text-4xl text-river">{districts.length}</p>
+        <p class="text-sm text-ink/70 mt-1.5">
+          <T en={`districts: ${districts.join(", ")}`} rw={`uturere: ${districts.join(", ")}`} />
+        </p>
+      </div>
+      <div class="card-surface p-5">
+        <p class="headline tnum text-4xl text-forest">{totalArea.toLocaleString("en-US")}</p>
+        <p class="text-sm text-ink/70 mt-1.5">
+          <T en="hectares across the sites shown" rw="hegitari ku hantu hagaragajwe" />
+        </p>
+      </div>
+    </div>
+
+    <p class="text-xs text-ink/70 mt-6 measure">
+      <T
+        en="Map tiles by OpenStreetMap contributors, served without API keys or licence fees. Risk context layers (flood and erosion) will be added from approved national sources during implementation."
+        rw="Amakarita atangwa n'abaterankunga ba OpenStreetMap, nta byangombwa cyangwa amafaranga y'uburenganzira bisabwa. Ibipimo by'ibyago by'imyuzure n'isuri bizongerwamo biturutse ku nkomoko z'igihugu zemejwe."
+      />
+    </p>
+  </section>
+</Base>

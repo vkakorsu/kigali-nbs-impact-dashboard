@@ -1,0 +1,70 @@
+---
+/**
+ * Four geometric imigongo-style marks, one per communication theme.
+ *
+ *  climate-adaptation        stacked chevrons, water moving over hills
+ *  environmental-protection  a diamond leaf-grid, fields and canopy
+ *  gender-inclusion          two interlocking diamonds, shared work
+ *  employment-economy        stepped triangles rising, skills and wages
+ *
+ * Stroke-based so they stay crisp at any size, drawn in currentColor
+ * unless an explicit color is passed.
+ */
+interface Props {
+  theme: string;
+  size?: number;
+  color?: string;
+  class?: string;
+}
+
+const { theme, size = 40, color = "currentColor", class: className = "" } = Astro.props;
+const sw = 3.5;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 48 48"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+  style={`color:${color};`}
+>
+  {
+    theme === "climate-adaptation" && (
+      <g stroke="currentColor" stroke-width={sw} stroke-linecap="square">
+        <path d="M6 17 L24 7 L42 17" />
+        <path d="M6 29 L24 19 L42 29" />
+        <path d="M6 41 L24 31 L42 41" />
+      </g>
+    )
+  }
+  {
+    theme === "environmental-protection" && (
+      <g stroke="currentColor" stroke-width={sw} stroke-linejoin="miter">
+        <path d="M14 6 L22 14 L14 22 L6 14 Z" />
+        <path d="M34 6 L42 14 L34 22 L26 14 Z" />
+        <path d="M14 26 L22 34 L14 42 L6 34 Z" />
+        <path d="M34 26 L42 34 L34 42 L26 34 Z" />
+      </g>
+    )
+  }
+  {
+    theme === "gender-inclusion" && (
+      <g stroke="currentColor" stroke-width={sw} stroke-linejoin="miter">
+        <path d="M17 10 L31 24 L17 38 L3 24 Z" />
+        <path d="M31 10 L45 24 L31 38 L17 24 Z" />
+      </g>
+    )
+  }
+  {
+    theme === "employment-economy" && (
+      <g stroke="currentColor" stroke-width={sw} stroke-linejoin="miter">
+        <path d="M4 42 L11 30 L18 42 Z" />
+        <path d="M16 42 L25 22 L34 42 Z" />
+        <path d="M30 42 L38 8 L46 42 Z" />
+      </g>
+    )
+  }
+</svg>

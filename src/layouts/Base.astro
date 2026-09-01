@@ -1,0 +1,224 @@
+---
+import "../styles/global.css";
+import LanguageToggle from "../components/LanguageToggle";
+import T from "../components/T.astro";
+import ImigongoBand from "../components/art/ImigongoBand.astro";
+import { t } from "../lib/i18n";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const fullTitle = title
+  ? `${title} | Kigali NbS Impact Dashboard`
+  : "Kigali NbS Impact Dashboard";
+
+const nav = [
+  { href: "/", key: "navHome" as const },
+  { href: "/map", key: "navMap" as const },
+  { href: "/stories", key: "navStories" as const },
+  { href: "/learn", key: "navLearn" as const },
+  { href: "/methodology", key: "navMethodology" as const },
+  { href: "/about-data", key: "navAboutData" as const },
+];
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta
+      name="description"
+      content={description ??
+        "Public dashboard communicating the impact of SUNCASA nature-based solutions in the lower Nyabarongo watershed, Kigali."}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/newsreader-latin-600-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script is:inline>
+      // Set language before first paint to avoid a flash of the wrong language.
+      (function () {
+        try {
+          var l = localStorage.getItem("lang");
+          if (l === "rw" || l === "en") document.documentElement.dataset.lang = l;
+        } catch (e) {}
+        // Opt in to presentation motion only when JS runs and the visitor
+        // has not asked for reduced motion. Without this class, nothing is
+        // ever hidden or animated.
+        try {
+          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            document.documentElement.classList.add("motion-ok");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="skip-link">
+      <T en={t("skipToContent").en} rw={t("skipToContent").rw} />
+    </a>
+
+    <header
+      class="sticky top-0 z-40 border-b border-(--rule)"
+      style="background: rgba(250, 247, 240, 0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
+    >
+      <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <a href="/" class="flex items-center gap-2.5 no-underline group">
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+            focusable="false"
+            class="shrink-0"
+          >
+            <rect width="64" height="64" rx="12" fill="#1a1714"></rect>
+            <path d="M32 8 L52 30 L32 52 L12 30 Z" fill="none" stroke="#d99a2b" stroke-width="4"></path>
+            <path d="M32 20 L42 30 L32 40 L22 30 Z" fill="#9b3d22"></path>
+            <path
+              d="M4 56 L18 46 L32 56 L46 46 L60 56"
+              fill="none"
+              stroke="#175943"
+              stroke-width="4"
+              stroke-linecap="square"></path>
+          </svg>
+          <span class="leading-tight">
+            <span class="block font-semibold text-highland-deep text-sm group-hover:text-highland">
+              <T en="Kigali NbS Impact Dashboard" rw="Imbonerahamwe y'ibisubizo bishingiye ku bidukikije i Kigali" />
+            </span>
+            <span class="hidden sm:block text-[0.62rem] uppercase tracking-[0.14em] text-ink/70 font-medium">
+              SUNCASA &middot; <T en="Lower Nyabarongo watershed" rw="Ikibaya cyo hasi cya Nyabarongo" />
+            </span>
+          </span>
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-x-4 gap-y-1 ml-auto"
+          aria-label="Main"
+        >
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={currentPath === item.href ? "page" : undefined}
+                class={`no-underline text-xs font-semibold uppercase tracking-[0.08em] pb-0.5 border-b-2 transition-colors hover:text-highland ${
+                  currentPath === item.href
+                    ? "text-highland border-gold"
+                    : "text-ink/70 border-transparent"
+                }`}
+              >
+                <T en={t(item.key).en} rw={t(item.key).rw} />
+              </a>
+            ))
+          }
+          <LanguageToggle client:load />
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="mt-16">
+      <ImigongoBand variant="zigzag" color="#d99a2b" bg="var(--color-highland-deep)" height={16} />
+      <div class="bg-highland-deep text-paper">
+        <div class="max-w-6xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-2 text-sm">
+          <div>
+            <div class="flex items-center gap-2.5 mb-3">
+              <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <rect width="64" height="64" rx="12" fill="rgba(250,247,240,0.08)"></rect>
+                <path d="M32 8 L52 30 L32 52 L12 30 Z" fill="none" stroke="#d99a2b" stroke-width="4"></path>
+                <path d="M32 20 L42 30 L32 40 L22 30 Z" fill="#9b3d22"></path>
+              </svg>
+              <p class="headline text-lg text-paper">
+                <T en={t("siteTitle").en} rw={t("siteTitle").rw} />
+              </p>
+            </div>
+            <p class="opacity-75 leading-relaxed measure">
+              <T en={t("partnersLine").en} rw={t("partnersLine").rw} />
+            </p>
+          </div>
+          <div class="md:text-right md:justify-self-end md:max-w-md">
+            <p class="opacity-75 leading-relaxed">
+              <T en={t("footerNote").en} rw={t("footerNote").rw} />
+            </p>
+            <p class="opacity-55 mt-4 text-xs leading-relaxed">
+              <T en={t("draftTranslationNote").en} rw={t("draftTranslationNote").rw} />
+            </p>
+          </div>
+        </div>
+        <div class="border-t border-paper/10">
+          <div
+            class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-2 text-[0.68rem] uppercase tracking-[0.14em] text-paper/70"
+          >
+            <span>SUNCASA &middot; IISD &middot; WRI &middot; RFA &middot; City of Kigali</span>
+            <span><T en="Funded by Global Affairs Canada" rw="Iterwa inkunga na Global Affairs Canada" /></span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // Presentation polish only: reveal-on-scroll and stat count-up.
+      // Runs solely when html.motion-ok was set (JS available, no
+      // reduced-motion preference). Non-JS visitors see final values.
+      (function () {
+        if (!document.documentElement.classList.contains("motion-ok")) return;
+        if (!("IntersectionObserver" in window)) return;
+
+        function countUp(el) {
+          if (el.dataset.counted) return;
+          el.dataset.counted = "1";
+          var target = parseFloat(el.getAttribute("data-countup"));
+          if (!isFinite(target)) return;
+          var start = null;
+          function step(ts) {
+            if (start === null) start = ts;
+            var p = Math.min((ts - start) / 900, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString("en-US");
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              el.classList.add("is-revealed");
+              if (el.hasAttribute("data-countup")) countUp(el);
+              el.querySelectorAll("[data-countup]").forEach(countUp);
+              io.unobserve(el);
+            });
+          },
+          { threshold: 0.12 }
+        );
+
+        document
+          .querySelectorAll("[data-reveal], [data-countup]")
+          .forEach(function (el) {
+            io.observe(el);
+          });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+---
+/**
+ * The "data passport" for an indicator. Every figure on the dashboard
+ * declares its source class, provider, latest update, and caveats, as
+ * required by RFP section 4.4.
+ */
+import T from "./T.astro";
+import { t } from "../lib/i18n";
+import type { Indicator, SourceClass } from "../lib/data";
+
+interface Props {
+  indicator: Indicator;
+}
+
+const { indicator } = Astro.props;
+
+const chipStyles: Record<SourceClass, string> = {
+  FMES: "bg-river/10 text-river border-river/30",
+  "SUNCASA monitoring": "bg-highland/10 text-highland border-highland/30",
+  National: "bg-ochre/10 text-ochre border-ochre/30",
+  Public: "bg-amber/10 text-amber border-amber/30",
+};
+
+const rows: Array<{
+  labelKey: Parameters<typeof t>[0];
+  value: string;
+  wide?: boolean;
+}> = [
+  { labelKey: "definition", value: indicator.definition_en, wide: true },
+  { labelKey: "dataSource", value: indicator.source },
+  { labelKey: "responsibleProvider", value: indicator.provider },
+  { labelKey: "latestUpdate", value: indicator.latest_update ?? "-" },
+  { labelKey: "unit", value: indicator.unit_en },
+  { labelKey: "caveats", value: indicator.caveats_en, wide: true },
+];
+---
+
+<section class="card-surface p-6" aria-label="Indicator metadata">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-4 border-b border-(--rule)">
+    <h2 class="eyebrow text-highland">
+      <T en="Data passport" rw="Irangamimerere y'imibare" />
+    </h2>
+    <span class={`chip ${chipStyles[indicator.source_class]}`}>
+      <span
+        class="inline-block w-2 h-2 rotate-45 rounded-[1px] bg-current"
+        aria-hidden="true"></span>
+      {indicator.source_class}
+    </span>
+  </div>
+
+  <dl class="grid gap-x-8 gap-y-4 sm:grid-cols-2 text-sm">
+    {
+      rows.map((row) => (
+        <div class={row.wide ? "sm:col-span-2" : ""}>
+          <dt class="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-ink/70">
+            <T en={t(row.labelKey).en} rw={t(row.labelKey).rw} />
+          </dt>
+          <dd class="mt-1 leading-relaxed text-ink/90">{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

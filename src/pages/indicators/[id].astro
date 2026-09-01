@@ -1,0 +1,165 @@
+---
+import Base from "../../layouts/Base.astro";
+import T from "../../components/T.astro";
+import MetadataBlock from "../../components/MetadataBlock.astro";
+import TrendChart from "../../components/TrendChart";
+import ThemeGlyph from "../../components/art/ThemeGlyph.astro";
+import { themeHex } from "../../components/art/palette";
+import { t } from "../../lib/i18n";
+import { getTheme } from "../../lib/themes";
+import { indicators, timeseries, formatValue } from "../../lib/data";
+
+export function getStaticPaths() {
+  return indicators.map((indicator) => ({ params: { id: indicator.id } }));
+}
+
+const { id } = Astro.params;
+const indicator = indicators.find((ind) => ind.id === id)!;
+const theme = getTheme(indicator.theme);
+const series = timeseries[indicator.id];
+const hex = themeHex[theme.slug];
+
+const trendGlyph =
+  indicator.trend === "up"
+    ? "\u25B2"
+    : indicator.trend === "down"
+      ? "\u25BC"
+      : indicator.trend === "flat"
+        ? "\u25C6"
+        : "";
+---
+
+<Base title={indicator.name_en}>
+  <section class="max-w-4xl mx-auto px-4 py-10">
+    <nav class="text-sm mb-8" aria-label="Breadcrumb">
+      <a href="/" class="text-highland no-underline hover:underline">
+        <T en={t("navHome").en} rw={t("navHome").rw} />
+      </a>
+      <span class="mx-2 text-ink/35">/</span>
+      <a href={`/themes/${theme.slug}`} class="text-highland no-underline hover:underline">
+        <T en={theme.name.en} rw={theme.name.rw} />
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-2.5 mb-3">
+      <ThemeGlyph theme={theme.slug} size={26} color={hex} />
+      <p class="eyebrow" style={`color:${hex};`}>
+        <T en={theme.short.en} rw={theme.short.rw} />
+      </p>
+      <span
+        class={`chip ${
+          indicator.status === "proposed"
+            ? "bg-gold/15 text-amber border-gold/40"
+            : "bg-highland/10 text-highland border-highland/25"
+        }`}
+      >
+        <T
+          en={t(indicator.status === "proposed" ? "proposed" : "core").en}
+          rw={t(indicator.status === "proposed" ? "proposed" : "core").rw}
+        />
+      </span>
+    </div>
+
+    <h1 class="headline text-3xl md:text-4xl leading-tight">
+      <T en={indicator.name_en} rw={indicator.name_rw} />
+    </h1>
+
+    <!-- Editorial number treatment -->
+    <div class="mt-6 pb-6 border-b border-(--rule)">
+      <p class="headline tnum text-6xl md:text-7xl leading-none text-ink">
+        {formatValue(indicator.value)}
+        {
+          indicator.trend !== "na" && (
+            <span class="text-2xl align-middle ml-1" style={`color:${hex};`} aria-hidden="true">
+              {trendGlyph}
+            </span>
+          )
+        }
+      </p>
+      <p class="text-lg text-ink/70 mt-3">
+        <T en={indicator.unit_en} rw={indicator.unit_rw} />
+        {
+          indicator.target !== null && (
+            <>
+              {" \u00B7 "}
+              <T en={t("target").en} rw={t("target").rw} />
+              <span class="tnum">: {formatValue(indicator.target)}</span>
+            </>
+          )
+        }
+      </p>
+      {
+        indicator.disaggregation && (
+          <p class="text-ink/80 mt-2 text-sm font-medium">
+            <T
+              en={`${Math.round(indicator.disaggregation.women_share * 100)} percent women \u00B7 ${Math.round(indicator.disaggregation.youth_share * 100)} percent youth (illustrative)`}
+              rw={`${Math.round(indicator.disaggregation.women_share * 100)} ku ijana abagore \u00B7 ${Math.round(indicator.disaggregation.youth_share * 100)} ku ijana urubyiruko (urugero)`}
+            />
+          </p>
+        )
+      }
+    </div>
+
+    <div class="mt-8 grid gap-6">
+      <section class="card-surface p-6">
+        <h2 class="eyebrow text-highland mb-3">
+          <T en="What this measures" rw="Icyo iyi mibare ipima" />
+        </h2>
+        <p class="leading-relaxed measure">{indicator.definition_en}</p>
+        <p class="text-sm text-ink/70 mt-3 lang-rw" lang="rw">
+          Igisobanuro mu Kinyarwanda kizashyirwamo numara kwemezwa na IISD n'abafatanyabikorwa ba SUNCASA.
+        </p>
+      </section>
+
+      <section class="card-surface p-6 relative overflow-hidden">
+        <span class="absolute inset-y-0 left-0 w-1" style={`background:${hex};`} aria-hidden="true"
+        ></span>
+        <h2 class="eyebrow text-highland mb-3">
+          <T en={t("whyThisMatters").en} rw={t("whyThisMatters").rw} />
+        </h2>
+        <p class="leading-relaxed measure">{indicator.why_en}</p>
+        <p class="text-sm text-ink/70 mt-3 lang-rw" lang="rw">
+          Umwandiko mu Kinyarwanda uzashyirwamo numara kwemezwa na IISD n'abafatanyabikorwa ba SUNCASA.
+        </p>
+      </section>
+
+      {
+        series && series.length > 0 && (
+          <section class="card-surface p-6">
+            <h2 class="eyebrow text-highland mb-4">
+              <T en="Progress over time" rw="Iterambere mu gihe" />
+            </h2>
+            <TrendChart client:visible series={series} color={hex} unit={indicator.unit_en} />
+            <p class="text-xs text-ink/70 mt-3">
+              <T
+                en="Cumulative values by quarter. Illustrative pending the SUNCASA data catalogue."
+                rw="Imibare yose hamwe ku gihembwe. Ni urugero mu gihe hategerejwe ububiko bw'imibare bwa SUNCASA."
+              />
+            </p>
+          </section>
+        )
+      }
+
+      {
+        indicator.id === "flood-risk-mapping" && (
+          <section class="card-surface p-6">
+            <h2 class="eyebrow text-highland mb-3">
+              <T en="See it on the map" rw="Yirebere ku ikarita" />
+            </h2>
+            <p class="leading-relaxed text-sm mb-3 measure">
+              <T
+                en="This indicator lives on the intervention map, where risk context layers sit under the intervention sites."
+                rw="Iyi mibare iri ku ikarita y'ibikorwa, aho ibipimo by'ibyago biri munsi y'aho ibikorwa bikorerwa."
+              />
+            </p>
+            <a href="/map" class="font-semibold text-highland no-underline hover:underline">
+              <T en={t("openFullMap").en} rw={t("openFullMap").rw} /> &rarr;
+            </a>
+          </section>
+        )
+      }
+
+      <MetadataBlock indicator={indicator} />
+    </div>
+  </section>
+</Base>

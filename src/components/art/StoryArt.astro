@@ -1,0 +1,53 @@
+---
+/**
+ * Imigongo composition fields used where story photography will
+ * eventually sit. Each theme gets its own arrangement drawn from the
+ * same geometry family: concentric diamonds, chevrons, and stepped
+ * triangles in the theme pigment on kaolin.
+ *
+ * These are clearly placeholders. The caption slot in StoryCard keeps
+ * the "photo to be supplied" note visible.
+ */
+import { themeHex, INK, GOLD, MIST } from "./palette";
+
+interface Props {
+  theme: string;
+  class?: string;
+}
+
+const { theme, class: className = "" } = Astro.props;
+const color = themeHex[theme] ?? INK;
+---
+
+<div class={`select-none ${className}`} aria-hidden="true" style="line-height:0;">
+  <svg
+    viewBox="0 0 400 180"
+    width="100%"
+    preserveAspectRatio="xMidYMid slice"
+    role="presentation"
+    focusable="false"
+    style="display:block;"
+  >
+    <rect width="400" height="180" fill={MIST}></rect>
+
+    <!-- Corner chevron rows -->
+    <g stroke={INK} stroke-width="3" fill="none" opacity="0.14">
+      <path d="M-10 24 L20 6 L50 24 L80 6 L110 24 L140 6 L170 24"></path>
+      <path d="M230 174 L260 156 L290 174 L320 156 L350 174 L380 156 L410 174"></path>
+    </g>
+
+    <!-- Concentric diamond centerpiece -->
+    <g stroke-linejoin="miter" fill="none">
+      <path d="M200 8 L318 90 L200 172 L82 90 Z" stroke={color} stroke-width="5" opacity="0.9"></path>
+      <path d="M200 34 L281 90 L200 146 L119 90 Z" stroke={INK} stroke-width="4" opacity="0.75"></path>
+      <path d="M200 58 L246 90 L200 122 L154 90 Z" stroke={GOLD} stroke-width="4"></path>
+      <path d="M200 76 L220 90 L200 104 L180 90 Z" fill={color}></path>
+    </g>
+
+    <!-- Flanking marks -->
+    <g stroke={color} stroke-width="4" fill="none" opacity="0.55">
+      <path d="M30 66 L54 90 L30 114 L6 90 Z"></path>
+      <path d="M370 66 L394 90 L370 114 L346 90 Z"></path>
+    </g>
+  </svg>
+</div>

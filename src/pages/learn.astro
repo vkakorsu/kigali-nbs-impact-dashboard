@@ -1,0 +1,170 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import ImigongoBand from "../components/art/ImigongoBand.astro";
+
+const glossary = [
+  {
+    term_en: "Nature-based solutions (NbS)",
+    term_rw: "Ibisubizo bishingiye ku bidukikije",
+    def_en:
+      "Actions that work with nature, like planting trees or restoring riverbanks, to solve problems people face, like floods and erosion. Instead of only building concrete walls, we help the landscape protect us.",
+    def_rw:
+      "Ibikorwa bikorana n'ibidukikije, nko gutera ibiti cyangwa gusubiza ubuzima inkengero z'imigezi, kugira ngo bikemure ibibazo abantu bahura na byo nk'imyuzure n'isuri.",
+  },
+  {
+    term_en: "Watershed",
+    term_rw: "Ikibaya cy'amazi",
+    def_en:
+      "All the land where rainfall drains toward the same river. When it rains anywhere in the lower Nyabarongo watershed, that water eventually reaches the Nyabarongo River. What happens on the hills decides what happens by the river.",
+    def_rw:
+      "Ubutaka bwose aho imvura igwa igatemba yerekeza ku mugezi umwe. Imvura igwa hose mu kibaya cyo hasi cya Nyabarongo amaherezo igera mu mugezi wa Nyabarongo.",
+  },
+  {
+    term_en: "Micro-catchment",
+    term_rw: "Agakibaya",
+    def_en:
+      "A small piece of a watershed, like one valley and its slopes. SUNCASA works in six micro-catchments so that effort concentrates where it protects the most people.",
+    def_rw:
+      "Agace gato k'ikibaya, nk'agasozi kamwe n'imanuka yako. SUNCASA ikorera mu tukibaya dutandatu kugira ngo imbaraga zijye aho zirinda abantu benshi.",
+  },
+  {
+    term_en: "Riparian buffer",
+    term_rw: "Inkengero z'umugezi",
+    def_en:
+      "The strip of trees and plants along a riverbank. It holds the bank together, filters dirty runoff, and slows floodwater before it reaches homes downstream.",
+    def_rw:
+      "Umurongo w'ibiti n'ibimera ku nkengero z'umugezi. Ufata inkombe hamwe, ukayungurura amazi yanduye, kandi ugabanya umuvuduko w'umwuzure.",
+  },
+  {
+    term_en: "Agroforestry",
+    term_rw: "Ubuhinzi-mashyamba",
+    def_en:
+      "Farming that mixes trees with crops on the same land. The trees hold the soil and give fruit or fodder, while the crops keep feeding the family. The hillside wins twice.",
+    def_rw:
+      "Ubuhinzi buvanga ibiti n'ibihingwa ku butaka bumwe. Ibiti bifata ubutaka bikanatanga imbuto, mu gihe ibihingwa bigaburira umuryango.",
+  },
+  {
+    term_en: "Indicator",
+    term_rw: "Igipimo",
+    def_en:
+      "A number we track over time to see whether things are improving, like trees planted or jobs created. A good indicator always says where it came from and what it does not tell you.",
+    def_rw:
+      "Umubare dukurikirana mu gihe kugira ngo turebe niba ibintu bigenda neza, nk'ibiti byatewe cyangwa imirimo yaremwe.",
+  },
+];
+
+const steps = [
+  {
+    en: "Start on the home page. The four colored themes are the four parts of the story.",
+    rw: "Tangirira ku ipaji y'ahabanza. Ingingo enye z'amabara ni ibice bine by'inkuru.",
+  },
+  {
+    en: "Pick a theme that interests you. Each theme page explains why it matters and lists its indicators.",
+    rw: "Hitamo ingingo ikushimishije. Buri paji y'ingingo isobanura impamvu ifite akamaro kandi igaragaza ibipimo byayo.",
+  },
+  {
+    en: "Open an indicator. You will find what it measures, why it matters, the trend over time, and exactly where the number comes from.",
+    rw: "Fungura igipimo. Uzasangamo icyo gipima, impamvu gifite akamaro, icyerekezo mu gihe, n'aho umubare ukomoka.",
+  },
+  {
+    en: "Check the map to see where the work happens, and read a story to meet the people doing it.",
+    rw: "Reba ikarita umenye aho ibikorwa bikorerwa, usome inkuru umenye abantu babikora.",
+  },
+];
+---
+
+<Base title="Learn">
+  <section class="relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 pt-12 md:pt-16 pb-10">
+      <p class="eyebrow text-ochre mb-3">
+        <T en="For students, youth, and the curious" rw="Ku banyeshuri, urubyiruko n'abashaka kumenya" />
+      </p>
+      <h1 class="headline text-4xl md:text-5xl leading-tight max-w-3xl">
+        <T en="Why is Kigali planting its way out of floods?" rw="Kuki Kigali itera ibiti ngo yikize imyuzure?" />
+      </h1>
+      <p class="mt-5 lede measure">
+        <T
+          en="Kigali is a city of hills, and water obeys the hills. When rain hits bare slopes, it races downhill, taking the soil with it and flooding the valleys where people live and work. This page explains, in plain language, how nature-based solutions change that story."
+          rw="Kigali ni umujyi w'imisozi, kandi amazi yumvira imisozi. Imvura iguye ku manuka yambaye ubusa, itemba yihuta, itwara ubutaka kandi ikuzuza ibibaya abantu babamo. Iyi paji isobanura mu rurimi rworoshye uko ibisubizo bishingiye ku bidukikije bihindura iyo nkuru."
+        />
+      </p>
+    </div>
+    <ImigongoBand variant="zigzag" color="rgba(49,101,140,0.4)" height={12} />
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 py-12" data-reveal>
+    <p class="eyebrow text-highland mb-2">
+      <T en="Four steps" rw="Intambwe enye" />
+    </p>
+    <h2 class="headline text-3xl mb-7">
+      <T en="How to read this dashboard" rw="Uko wasoma iyi mbonerahamwe" />
+    </h2>
+    <ol class="grid gap-4">
+      {
+        steps.map((step, index) => (
+          <li class="card-surface flex gap-5 p-5 items-start">
+            <span
+              class="w-9 h-9 rotate-45 rounded-[4px] bg-gold flex items-center justify-center shrink-0 mt-0.5 ml-1"
+              aria-hidden="true"
+            >
+              <span class="-rotate-45 font-bold text-highland-deep tnum">{index + 1}</span>
+            </span>
+            <p class="leading-relaxed pt-1">
+              <T en={step.en} rw={step.rw} />
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="bg-mist/60 border-y border-(--rule)">
+    <div class="max-w-4xl mx-auto px-4 py-12" data-reveal>
+      <p class="eyebrow text-highland mb-2">
+        <T en="Glossary" rw="Amagambo" />
+      </p>
+      <h2 class="headline text-3xl mb-7">
+        <T en="Words worth knowing" rw="Amagambo akwiye kumenywa" />
+      </h2>
+      <dl class="grid gap-4 md:grid-cols-2">
+        {
+          glossary.map((entry) => (
+            <div class="card-surface p-5">
+              <dt class="font-semibold text-highland flex items-center gap-2.5">
+                <span
+                  class="inline-block w-2 h-2 rotate-45 rounded-[1px] bg-ochre shrink-0"
+                  aria-hidden="true"
+                />
+                <T en={entry.term_en} rw={entry.term_rw} />
+              </dt>
+              <dd class="mt-2.5 text-sm leading-relaxed text-ink/85">
+                <T en={entry.def_en} rw={entry.def_rw} />
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 py-12" data-reveal>
+    <div class="bg-highland-deep text-paper rounded-2xl overflow-hidden">
+      <ImigongoBand variant="diamond" color="rgba(217,154,43,0.4)" height={12} />
+      <div class="p-8 md:p-10">
+        <p class="eyebrow text-gold mb-2">
+          <T en="For teachers" rw="Ku barimu" />
+        </p>
+        <h2 class="headline text-2xl md:text-3xl text-paper mb-3">
+          <T en="Bring your class to the data" rw="Zana ishuri ryawe ku mibare" />
+        </h2>
+        <p class="leading-relaxed opacity-85 measure">
+          <T
+            en="Teachers can use any indicator page as a lesson starter: what does this number measure, who collected it, and what would make it go up or down? The map makes a good field trip planner, and the stories show the people behind the numbers. Everything here is free to use."
+            rw="Abarimu bashobora gukoresha buri paji y'igipimo nk'intangiriro y'isomo. Ikarita ifasha gutegura urugendo shuri, kandi inkuru zigaragaza abantu bari inyuma y'imibare. Ibiri hano byose ni ubuntu."
+          />
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

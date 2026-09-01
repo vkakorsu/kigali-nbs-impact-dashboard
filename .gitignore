@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Generated data (rebuilt by npm run ingest)
+src/data/generated/
+
+# Exports
+exports/
+
+# Environment
+.env
+.env.*
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/

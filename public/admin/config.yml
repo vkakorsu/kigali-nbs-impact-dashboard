@@ -1,0 +1,112 @@
+# Sveltia CMS configuration.
+# The admin screen edits the plain data files in this repository through
+# simple forms. No server, no database. Every save is a version-controlled
+# commit and the site rebuilds automatically.
+
+backend:
+  name: github
+  repo: vkakorsu/kigali-nbs-impact-dashboard
+  branch: main
+
+site_url: https://kigali-nbs-impact-dashboard.vercel.app
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: dashboard-data
+    label: Dashboard data
+    files:
+      - name: indicators
+        label: Indicators and metadata
+        file: data/indicators.json
+        format: json
+        fields:
+          - name: $comment
+            label: Editor note
+            widget: string
+            required: false
+          - name: indicators
+            label: Indicators
+            label_singular: Indicator
+            widget: list
+            summary: "{{fields.name_en}} ({{fields.value}})"
+            fields:
+              - { name: id, label: Identifier, widget: string, hint: "Lowercase with hyphens. Do not change after publication." }
+              - name: theme
+                label: Theme
+                widget: select
+                options:
+                  - { label: "Climate adaptation", value: climate-adaptation }
+                  - { label: "Environmental protection and resource management", value: environmental-protection }
+                  - { label: "Gender equality and social inclusion", value: gender-inclusion }
+                  - { label: "Employment and economic opportunities", value: employment-economy }
+              - name: status
+                label: Status
+                widget: select
+                options:
+                  - { label: "Core (shown as confirmed)", value: core }
+                  - { label: "Proposed (flagged for inception)", value: proposed }
+              - { name: name_en, label: Name (English), widget: string }
+              - { name: name_rw, label: Name (Kinyarwanda), widget: string }
+              - { name: unit_en, label: Unit (English), widget: string }
+              - { name: unit_rw, label: Unit (Kinyarwanda), widget: string }
+              - { name: value, label: Latest value, widget: number, value_type: float, required: false }
+              - { name: target, label: Target, widget: number, value_type: float, required: false }
+              - name: trend
+                label: Trend
+                widget: select
+                options:
+                  - { label: "Rising", value: up }
+                  - { label: "Falling", value: down }
+                  - { label: "Stable", value: flat }
+                  - { label: "Not applicable", value: na }
+              - { name: latest_update, label: Date of latest update, widget: string, required: false, hint: "YYYY-MM-DD" }
+              - { name: update_frequency, label: Update frequency, widget: string }
+              - name: source_class
+                label: Source class
+                widget: select
+                hint: "Distinguishes FMES, SUNCASA monitoring, approved national data, and public data, as the RFP requires."
+                options:
+                  - { label: "FMES", value: FMES }
+                  - { label: "SUNCASA monitoring", value: SUNCASA monitoring }
+                  - { label: "National", value: National }
+                  - { label: "Public", value: Public }
+              - { name: source, label: Data source, widget: string }
+              - { name: provider, label: Responsible data provider, widget: string }
+              - { name: definition_en, label: Indicator definition (English), widget: text }
+              - { name: why_en, label: Why this matters (English), widget: text }
+              - { name: caveats_en, label: Limitations and caveats (English), widget: text }
+              - { name: illustrative, label: Illustrative value, widget: boolean, default: true, hint: "Keep on until the value is validated against the SUNCASA data catalogue." }
+      - name: stories
+        label: Stories
+        file: data/stories.json
+        format: json
+        fields:
+          - name: $comment
+            label: Editor note
+            widget: string
+            required: false
+          - name: stories
+            label: Stories
+            label_singular: Story
+            widget: list
+            summary: "{{fields.title_en}}"
+            fields:
+              - { name: id, label: Identifier, widget: string }
+              - name: theme
+                label: Theme
+                widget: select
+                options:
+                  - { label: "Climate adaptation", value: climate-adaptation }
+                  - { label: "Environmental protection and resource management", value: environmental-protection }
+                  - { label: "Gender equality and social inclusion", value: gender-inclusion }
+                  - { label: "Employment and economic opportunities", value: employment-economy }
+              - { name: title_en, label: Title (English), widget: string }
+              - { name: title_rw, label: Title (Kinyarwanda), widget: string }
+              - { name: summary_en, label: Summary (English), widget: text }
+              - { name: summary_rw, label: Summary (Kinyarwanda), widget: text }
+              - { name: body_en, label: Body (English), widget: text }
+              - { name: body_rw, label: Body (Kinyarwanda), widget: text }
+              - { name: linked_indicators, label: Linked indicator ids, widget: list, required: false }
+              - { name: photo_placeholder, label: Photo caption or placeholder, widget: string, required: false }
+              - { name: illustrative, label: Illustrative story structure, widget: boolean, default: true }

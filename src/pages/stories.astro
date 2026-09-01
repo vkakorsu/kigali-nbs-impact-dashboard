@@ -1,0 +1,82 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import StoryArt from "../components/art/StoryArt.astro";
+import { themeHex } from "../components/art/palette";
+import { t } from "../lib/i18n";
+import { getTheme } from "../lib/themes";
+import { stories, getIndicator } from "../lib/data";
+---
+
+<Base title="Stories">
+  <section class="max-w-4xl mx-auto px-4 py-10">
+    <p class="eyebrow text-highland mb-2">
+      <T en="Beyond the numbers" rw="Hakurya y'imibare" />
+    </p>
+    <h1 class="headline text-3xl md:text-4xl mb-3">
+      <T en={t("storiesTitle").en} rw={t("storiesTitle").rw} />
+    </h1>
+    <p class="text-ink/70 mb-10 measure">
+      <T
+        en="Stories are a core part of this dashboard, because a number cannot carry meaning alone. Every story is clearly labelled as a story, links to the indicators it brings to life, and is supplied and validated by the SUNCASA team before publication. The structures below show exactly where approved narratives, photographs, and quotes will live."
+        rw="Inkuru ni igice cy'ingenzi cy'iyi mbonerahamwe, kuko umubare wonyine udashobora gutwara ubusobanuro. Buri nkuru igaragazwa nk'inkuru, ihuzwa n'imibare igaragaza, kandi itangwa n'itsinda rya SUNCASA mbere yo gutangazwa."
+      />
+    </p>
+
+    <div class="grid gap-10">
+      {
+        stories.map((story) => {
+          const theme = getTheme(story.theme);
+          const hex = themeHex[story.theme];
+          return (
+            <article id={story.id} class="card-surface overflow-hidden scroll-mt-24">
+              <div class="relative">
+                <StoryArt theme={story.theme} />
+                <p
+                  class="absolute bottom-0 inset-x-0 text-xs italic text-paper/95 leading-snug px-5 py-2.5"
+                  style="background: linear-gradient(0deg, rgba(26,23,20,0.65) 0%, rgba(26,23,20,0) 100%);"
+                >
+                  {story.photo_placeholder}
+                </p>
+              </div>
+              <div class="p-6 md:p-8">
+                <p class="eyebrow mb-2" style={`color:${hex};`}>
+                  <T en={t("storyLabel").en} rw={t("storyLabel").rw} />
+                  {" \u00B7 "}
+                  <T en={theme.short.en} rw={theme.short.rw} />
+                  {" \u00B7 "}
+                  <T en={t("illustrative").en} rw={t("illustrative").rw} />
+                </p>
+                <h2 class="headline text-2xl md:text-3xl leading-snug mb-3">
+                  <T en={story.title_en} rw={story.title_rw} />
+                </h2>
+                <p class="leading-relaxed mb-3 font-medium text-ink/90 measure">
+                  <T en={story.summary_en} rw={story.summary_rw} />
+                </p>
+                <p class="leading-relaxed text-ink/75 text-sm measure">
+                  <T en={story.body_en} rw={story.body_rw} />
+                </p>
+                <div class="mt-6 pt-4 border-t border-(--rule) flex flex-wrap gap-2 items-center text-sm">
+                  <span class="eyebrow text-ink/70">
+                    <T en="Indicators in this story" rw="Imibare iri muri iyi nkuru" />
+                  </span>
+                  {story.linked_indicators.map((linkedId) => {
+                    const linked = getIndicator(linkedId);
+                    return (
+                      <a
+                        href={`/indicators/${linked.id}`}
+                        class="no-underline chip bg-mist text-highland border-highland/20 hover:bg-gold/20 transition-colors"
+                      >
+                        <T en={linked.name_en} rw={linked.name_rw} />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+</Base>

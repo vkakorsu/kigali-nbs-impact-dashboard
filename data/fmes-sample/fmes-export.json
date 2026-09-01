@@ -1,0 +1,40 @@
+{
+  "$comment": "Illustrative FMES-shaped export payload. The real Forest Monitoring and Evaluation System (fmes.rfa.rw) is credential-gated and calculates 24 forestry indicators from field data. This sample mimics a plausible approved-data export so the fmes-adapter script can demonstrate the interoperability seam: FMES-shaped data in, dashboard indicator updates out, with FMES remaining the system of record. The actual export schema is confirmed with RFA during the inception FMES Interoperability Assessment.",
+  "system": "FMES",
+  "custodian": "Rwanda Forestry Authority",
+  "generated": "2026-08-15T00:00:00Z",
+  "spatial_reference": "ITRF2005 / TM Rwanda (transformed to WGS84 on ingest)",
+  "classification": "Approved for public communication",
+  "records": [
+    {
+      "fmes_code": "FMES-IND-07",
+      "name": "Seedlings planted (cumulative)",
+      "unit": "count",
+      "period": "2026-Q2",
+      "value": 1267559,
+      "districts": ["Gasabo", "Kicukiro", "Nyarugenge"],
+      "method": "Field reporting via FMES mobile application",
+      "last_updated": "2026-06-30"
+    },
+    {
+      "fmes_code": "FMES-IND-12",
+      "name": "Area under agroforestry",
+      "unit": "ha",
+      "period": "2026-Q2",
+      "value": 1654,
+      "districts": ["Gasabo", "Kicukiro", "Nyarugenge"],
+      "method": "Plot boundaries captured by GPS in FMES",
+      "last_updated": "2026-06-30"
+    },
+    {
+      "fmes_code": "FMES-IND-03",
+      "name": "Area restored or under improved management",
+      "unit": "ha",
+      "period": "2026-Q2",
+      "value": 2016,
+      "districts": ["Gasabo", "Kicukiro", "Nyarugenge"],
+      "method": "Aggregated from district forest management plan reporting",
+      "last_updated": "2026-06-30"
+    }
+  ]
+}

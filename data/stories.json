@@ -1,0 +1,44 @@
+{
+  "$comment": "Curated stories are a core MVP requirement in the Kigali PRD. Story sourcing and validation are coordinated by the SUNCASA team, not the vendor, so every story below is an illustrative structure showing exactly where approved narrative text, photographs, and quotes will live. Editable at /admin.",
+  "stories": [
+    {
+      "id": "women-of-the-riverbank",
+      "theme": "gender-inclusion",
+      "title_en": "The women replanting the riverbank",
+      "title_rw": "Abagore basubiza ubuzima inkengero z'umugezi",
+      "summary_en": "Along the Nyabarongo, women's cooperatives lead riparian restoration crews. This story follows one crew through a planting season, from nursery to riverbank.",
+      "summary_rw": "Ku nkengero za Nyabarongo, amakoperative y'abagore ayoboye ibikorwa byo gusubiza ubuzima inkengero. Iyi nkuru ikurikirana itsinda rimwe mu gihembwe cyo gutera.",
+      "body_en": "Illustrative story structure. The approved narrative, photographs, and quotes for this story will be supplied and validated by the SUNCASA team, as the PRD specifies. The layout holds a lead photograph, three short paragraphs of plain language narrative, one pull quote from a participant, and the two indicators this story brings to life: women and marginalized groups engaged, and riparian buffer restored.",
+      "body_rw": "Umwandiko mu Kinyarwanda uzashyirwamo numara kwemezwa na IISD n'abafatanyabikorwa ba SUNCASA.",
+      "linked_indicators": ["women-engaged", "riparian-buffer"],
+      "photo_placeholder": "Lead photo: planting crew at work on the riverbank (to be supplied)",
+      "illustrative": true
+    },
+    {
+      "id": "classroom-by-the-river",
+      "theme": "climate-adaptation",
+      "title_en": "A classroom by the river",
+      "title_rw": "Ishuri riri ku nkengero z'umugezi",
+      "summary_en": "Students from Kigali schools visit the restoration sites to learn what a watershed is, why their city floods, and what a tree has to do with it.",
+      "summary_rw": "Abanyeshuri b'i Kigali basura aho ibikorwa bikorerwa kugira ngo bige icyo ikibaya ari cho, impamvu umujyi wabo wuzura, n'icyo igiti gifitanye na byo.",
+      "body_en": "Illustrative story structure. The approved narrative, photographs, and quotes will be supplied and validated by the SUNCASA team. This story exists because students and youth are an explicit priority audience of this dashboard. The layout links to the Learn page and to the flood and erosion risk mapping indicator, so a curious student can go from a story to a map to an explanation in three taps.",
+      "body_rw": "Umwandiko mu Kinyarwanda uzashyirwamo numara kwemezwa na IISD n'abafatanyabikorwa ba SUNCASA.",
+      "linked_indicators": ["flood-risk-mapping", "trees-planted"],
+      "photo_placeholder": "Lead photo: students at a riverside site visit (to be supplied)",
+      "illustrative": true
+    },
+    {
+      "id": "from-flood-path-to-food-forest",
+      "theme": "employment-economy",
+      "title_en": "From flood path to food forest",
+      "title_rw": "Kuva mu nzira y'umwuzure kugera ku murima w'ibiti n'ibihingwa",
+      "summary_en": "On a hillside that used to shed water and soil into the valley, agroforestry plots now hold the slope, feed families, and pay wages.",
+      "summary_rw": "Ku musozi wahoze usuka amazi n'ubutaka mu kibaya, ubuhinzi-mashyamba bufashe umusozi, bugaburira imiryango kandi butanga imishahara.",
+      "body_en": "Illustrative story structure. The approved narrative, photographs, and quotes will be supplied and validated by the SUNCASA team. The layout pairs this story with the agroforestry established and jobs created indicators, showing how one hillside connects the environmental theme to the employment theme.",
+      "body_rw": "Umwandiko mu Kinyarwanda uzashyirwamo numara kwemezwa na IISD n'abafatanyabikorwa ba SUNCASA.",
+      "linked_indicators": ["agroforestry-area", "jobs-created"],
+      "photo_placeholder": "Lead photo: agroforestry plot with intercropped trees (to be supplied)",
+      "illustrative": true
+    }
+  ]
+}

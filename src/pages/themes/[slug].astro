@@ -1,0 +1,116 @@
+---
+import Base from "../../layouts/Base.astro";
+import T from "../../components/T.astro";
+import IndicatorCard from "../../components/IndicatorCard.astro";
+import StoryCard from "../../components/StoryCard.astro";
+import TrendChart from "../../components/TrendChart";
+import ThemeGlyph from "../../components/art/ThemeGlyph.astro";
+import ImigongoBand from "../../components/art/ImigongoBand.astro";
+import { themeHex } from "../../components/art/palette";
+import { themes, getTheme } from "../../lib/themes";
+import { indicatorsByTheme, stories, timeseries } from "../../lib/data";
+
+export function getStaticPaths() {
+  return themes.map((theme) => ({ params: { slug: theme.slug } }));
+}
+
+const { slug } = Astro.params;
+const theme = getTheme(slug!);
+const themeIndicators = indicatorsByTheme(theme.slug);
+const themeStories = stories.filter((story) => story.theme === theme.slug);
+const hex = themeHex[theme.slug];
+const chapter = themes.findIndex((item) => item.slug === theme.slug) + 1;
+
+// Feature the first core indicator that has a time series.
+const featured = themeIndicators.find(
+  (ind) => ind.status === "core" && timeseries[ind.id]?.length
+);
+---
+
+<Base title={theme.name.en}>
+  <!-- Chapter-style header -->
+  <section class="relative overflow-hidden">
+    <div
+      class="absolute -right-16 -top-10 opacity-[0.07] hidden md:block"
+      aria-hidden="true"
+    >
+      <ThemeGlyph theme={theme.slug} size={340} color={hex} />
+    </div>
+    <div class="max-w-6xl mx-auto px-4 pt-12 md:pt-16 pb-10 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <ThemeGlyph theme={theme.slug} size={34} color={hex} />
+        <p class="eyebrow" style={`color:${hex};`}>
+          <T en="Theme" rw="Ingingo" />
+          {" "}<span class="tnum">{chapter} / 4</span>
+        </p>
+      </div>
+      <h1 class="headline text-4xl md:text-5xl text-ink max-w-3xl">
+        <T en={theme.name.en} rw={theme.name.rw} />
+      </h1>
+      <p class="mt-4 text-lg font-semibold max-w-3xl" style={`color:${hex};`}>
+        <T en={theme.keyMessage.en} rw={theme.keyMessage.rw} />
+      </p>
+      <p class="mt-4 leading-relaxed text-ink/75 measure">
+        <T en={theme.blurb.en} rw={theme.blurb.rw} />
+      </p>
+    </div>
+    <ImigongoBand variant="zigzag" color={`${hex}59`} height={12} />
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-12" data-reveal>
+    <p class="eyebrow text-highland mb-2">
+      <T en="The evidence" rw="Ibimenyetso" />
+    </p>
+    <h2 class="headline text-3xl mb-7">
+      <T en="Indicators in this theme" rw="Imibare y'iyi ngingo" />
+    </h2>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {themeIndicators.map((indicator) => <IndicatorCard indicator={indicator} />)}
+    </div>
+  </section>
+
+  {
+    featured && (
+      <section class="bg-mist/60 border-y border-(--rule)">
+        <div class="max-w-6xl mx-auto px-4 py-12" data-reveal>
+          <p class="eyebrow mb-2" style={`color:${hex};`}>
+            <T en="Featured trend" rw="Icyerekezo cyatoranyijwe" />
+          </p>
+          <h2 class="headline text-3xl mb-2">
+            <T en={featured.name_en} rw={featured.name_rw} />{" "}
+            <span class="text-ink/70 text-xl font-sans font-normal">
+              <T en="over time" rw="mu gihe" />
+            </span>
+          </h2>
+          <p class="text-ink/70 mb-6 measure text-sm">{featured.why_en}</p>
+          <div class="card-surface p-4 md:p-6">
+            <TrendChart
+              client:visible
+              series={timeseries[featured.id]}
+              color={hex}
+              unit={featured.unit_en}
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    themeStories.length > 0 && (
+      <section class="max-w-6xl mx-auto px-4 py-12" data-reveal>
+        <p class="eyebrow text-highland mb-2">
+          <T en="Beyond the numbers" rw="Hakurya y'imibare" />
+        </p>
+        <h2 class="headline text-3xl mb-7">
+          <T en="Stories from this theme" rw="Inkuru z'iyi ngingo" />
+        </h2>
+        <div class="grid gap-5 md:grid-cols-3">
+          {themeStories.map((story) => (
+            <StoryCard story={story} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Base>

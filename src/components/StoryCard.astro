@@ -1,0 +1,44 @@
+---
+import T from "./T.astro";
+import { t } from "../lib/i18n";
+import { getTheme } from "../lib/themes";
+import type { Story } from "../lib/data";
+import StoryArt from "./art/StoryArt.astro";
+
+interface Props {
+  story: Story;
+}
+
+const { story } = Astro.props;
+const theme = getTheme(story.theme);
+---
+
+<article class="card-surface overflow-hidden flex flex-col">
+  <div class="relative">
+    <StoryArt theme={story.theme} />
+    <p
+      class="absolute bottom-0 inset-x-0 text-[0.65rem] italic text-paper/95 leading-snug px-4 py-2"
+      style="background: linear-gradient(0deg, rgba(26,23,20,0.65) 0%, rgba(26,23,20,0) 100%);"
+    >
+      {story.photo_placeholder}
+    </p>
+  </div>
+  <div class="p-5 flex flex-col gap-2 flex-1">
+    <p class="eyebrow" style={`color:${theme.color};`}>
+      <T en={t("storyLabel").en} rw={t("storyLabel").rw} />
+      {" \u00B7 "}
+      <T en={theme.short.en} rw={theme.short.rw} />
+    </p>
+    <h3 class="headline text-xl leading-snug">
+      <a href={`/stories#${story.id}`} class="no-underline hover:underline text-inherit">
+        <T en={story.title_en} rw={story.title_rw} />
+      </a>
+    </h3>
+    <p class="text-sm leading-relaxed text-ink/80">
+      <T en={story.summary_en} rw={story.summary_rw} />
+    </p>
+    <p class="text-[0.7rem] text-ink/70 mt-auto pt-2.5 border-t border-(--rule) tracking-wide">
+      <T en={t("illustrative").en} rw={t("illustrative").rw} />
+    </p>
+  </div>
+</article>

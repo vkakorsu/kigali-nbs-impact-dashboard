@@ -1,0 +1,345 @@
+@import "tailwindcss";
+
+/*
+  Kigali visual identity, version 2. Not a Johannesburg reskin.
+
+  The palette is anchored in imigongo, Rwanda's geometric relief art:
+  charcoal ink, kaolin paper, ochre red and ochre yellow, joined by
+  landscape tones. Highland forest green for the hills, Nyabarongo
+  river blue, jacaranda bloom, and market amber.
+
+  Typography is self-hosted. Newsreader carries display headlines,
+  Inter carries body text and data with tabular figures.
+*/
+
+/* ---------------------------------------------------------------- */
+/* Self-hosted fonts (woff2, latin subset, ~145 KB total)            */
+/* ---------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin-500-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/inter-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/inter-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------------------------------------------------------------- */
+/* Design tokens                                                     */
+/* ---------------------------------------------------------------- */
+
+@theme {
+  /* Imigongo pigments */
+  --color-ink: #1a1714; /* charcoal black */
+  --color-paper: #faf7f0; /* kaolin white */
+  --color-mist: #f1ebdd; /* warm kaolin wash for section backgrounds */
+  --color-ochre: #9b3d22; /* imigongo ochre red */
+  --color-clay: #9b3d22; /* alias kept for existing utilities */
+  --color-gold: #d99a2b; /* imigongo ochre yellow, decorative and focus */
+
+  /* Landscape tones */
+  --color-highland: #175943; /* hillside forest green */
+  --color-highland-deep: #0f3d2e; /* deep canopy, dark bands */
+  --color-river: #31658c; /* Nyabarongo blue */
+  --color-forest: #2e7d4f; /* young plantation green */
+  --color-bloom: #7a4e8c; /* jacaranda bloom */
+  --color-amber: #8f5710; /* market amber, AA safe on paper */
+
+  --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+}
+
+/* Hairline rule color used across cards, tables, and dividers */
+:root {
+  --rule: rgba(26, 23, 20, 0.14);
+}
+
+/* ---------------------------------------------------------------- */
+/* Language visibility. The html element carries data-lang, set      */
+/* before paint by an inline script, toggled by the LanguageToggle   */
+/* island. Both languages ship in the static HTML, so switching is   */
+/* instant and works offline.                                        */
+/* ---------------------------------------------------------------- */
+
+html[data-lang="en"] .lang-rw {
+  display: none;
+}
+html[data-lang="rw"] .lang-en {
+  display: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------------- */
+/* Editorial utilities                                               */
+/* ---------------------------------------------------------------- */
+
+/* Display headlines set in Newsreader */
+.headline {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+/* Hero-scale display size */
+.display {
+  font-size: clamp(2.6rem, 5.5vw + 1rem, 4.4rem);
+  line-height: 1.05;
+}
+
+/* Small-caps section label */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Tabular figures wherever numbers appear */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Reading measure for narrative text */
+.measure {
+  max-width: 68ch;
+}
+
+/* Lede paragraph under headlines */
+.lede {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: rgba(26, 23, 20, 0.78);
+}
+
+/* Hairline rules */
+.rule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* Card surface shared by indicator, story, and glossary cards */
+.card-surface {
+  background: #fffdf8;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.card-surface:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -14px rgba(26, 23, 20, 0.28);
+  border-color: rgba(26, 23, 20, 0.24);
+}
+
+/* Source-class chips on data passports */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--rule);
+}
+
+/* ---------------------------------------------------------------- */
+/* Focus, skip link, accessibility                                   */
+/* ---------------------------------------------------------------- */
+
+/* Ochre ring on light surfaces (6.4:1 on paper). Dark bands switch to
+   gold (5.0:1 on highland deep) so the ring passes the 3:1 non-text
+   contrast requirement everywhere. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-ochre);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.bg-highland-deep a:focus-visible,
+.bg-highland-deep button:focus-visible,
+.bg-ink a:focus-visible,
+.skip-link:focus-visible {
+  outline-color: var(--color-gold);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-highland);
+  color: var(--color-paper);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 6px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Motion. Reveal and count-up are presentation polish only.         */
+/* The hidden state is applied exclusively under html.motion-ok,     */
+/* which an inline script sets only when JavaScript runs and the     */
+/* visitor has not requested reduced motion. No JS, no hiding.       */
+/* ---------------------------------------------------------------- */
+
+html.motion-ok [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+html.motion-ok [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Leaflet: muted tiles and branded popups                           */
+/* ---------------------------------------------------------------- */
+
+.map-frame {
+  height: 420px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--color-mist);
+}
+@media (min-width: 768px) {
+  .map-frame {
+    height: 520px;
+  }
+}
+
+/* Desaturate the basemap so intervention markers carry the color */
+.map-frame .leaflet-tile-pane {
+  filter: saturate(0.45) contrast(0.94) brightness(1.04) sepia(0.1);
+}
+
+.map-frame .leaflet-popup-content-wrapper {
+  background: #fffdf8;
+  color: var(--color-ink);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px -12px rgba(26, 23, 20, 0.35);
+  font-family: var(--font-sans);
+}
+.map-frame .leaflet-popup-tip {
+  background: #fffdf8;
+  border: 1px solid var(--rule);
+}
+.map-frame .leaflet-popup-content {
+  margin: 0.85rem 1rem;
+  line-height: 1.5;
+}
+.map-frame .leaflet-container {
+  font-family: var(--font-sans);
+}
+.map-frame .leaflet-control-attribution {
+  background: rgba(250, 247, 240, 0.85);
+  color: rgba(26, 23, 20, 0.75);
+  font-size: 0.62rem;
+}
+.map-frame .leaflet-control-zoom a {
+  color: var(--color-ink);
+  border-color: var(--rule);
+}
+
+/* Diamond site markers rendered as Leaflet divIcons */
+.site-marker {
+  background: transparent;
+  border: none;
+}
+.site-marker span {
+  display: block;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+  border-radius: 3px;
+  border: 2px solid #fffdf8;
+  box-shadow: 0 2px 6px rgba(26, 23, 20, 0.4);
+}

@@ -1,0 +1,260 @@
+---
+import Base from "../layouts/Base.astro";
+import T from "../components/T.astro";
+import IndicatorCard from "../components/IndicatorCard.astro";
+import StoryCard from "../components/StoryCard.astro";
+import StatBlock from "../components/StatBlock.astro";
+import InterventionMap from "../components/InterventionMap";
+import HillsPanorama from "../components/art/HillsPanorama.astro";
+import ImigongoBand from "../components/art/ImigongoBand.astro";
+import ThemeGlyph from "../components/art/ThemeGlyph.astro";
+import { t } from "../lib/i18n";
+import { themes } from "../lib/themes";
+import { indicatorsByTheme, getIndicator, stories, sites } from "../lib/data";
+
+// Headline indicator per theme: first core indicator with a value.
+const headlines = themes.map((theme) => {
+  const themed = indicatorsByTheme(theme.slug);
+  const headline = themed.find((ind) => ind.status === "core" && ind.value !== null) ?? themed[0];
+  return { theme, indicator: headline, count: themed.length };
+});
+
+// Programme at a glance, drawn from the indicator store.
+const glance = [
+  {
+    indicator: getIndicator("trees-planted"),
+    label: { en: "trees planted in the watershed", rw: "ibiti byatewe mu kibaya" },
+  },
+  {
+    indicator: getIndicator("area-restored"),
+    label: { en: "hectares under restoration", rw: "hegitari zirimo gusubizwa ubuzima" },
+  },
+  {
+    indicator: getIndicator("women-engaged"),
+    label: { en: "women and marginalized people engaged", rw: "abagore n'abatishoboye bafite uruhare" },
+  },
+  {
+    indicator: getIndicator("jobs-created"),
+    label: { en: "green jobs created", rw: "imirimo y'icyatsi yaremwe" },
+  },
+];
+---
+
+<Base title="Home">
+  <!-- Editorial hero over the thousand hills -->
+  <section class="relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 pt-14 md:pt-20 pb-4 relative z-10">
+      <p class="eyebrow text-ochre mb-4">
+        SUNCASA &middot; Kigali &middot; <T en="Lower Nyabarongo watershed" rw="Ikibaya cyo hasi cya Nyabarongo" />
+      </p>
+      <h1 class="headline display text-highland-deep max-w-4xl mb-5">
+        <T
+          en="Nature is protecting Kigali. Here is the evidence."
+          rw="Ibidukikije birinda Kigali. Dore ibimenyetso."
+        />
+      </h1>
+      <p class="lede measure">
+        <T
+          en="In the hills of the lower Nyabarongo watershed, the SUNCASA project is restoring land, planting trees, and creating green jobs so that floods slow down, soil stays on the slopes, and communities grow stronger. This dashboard explains what nature-based solutions are, what SUNCASA is doing, and why it matters."
+          rw="Mu misozi y'ikibaya cyo hasi cya Nyabarongo, umushinga SUNCASA usubiza ubuzima ubutaka, utera ibiti kandi utanga imirimo y'icyatsi kugira ngo imyuzure igabanuke, ubutaka bugume ku misozi, kandi imiryango ikomere. Iyi mbonerahamwe isobanura ibisubizo bishingiye ku bidukikije, ibyo SUNCASA ikora, n'impamvu bifite akamaro."
+        />
+      </p>
+      <div class="flex flex-wrap gap-3 mt-7">
+        <a
+          href="/learn"
+          class="no-underline bg-highland text-paper font-semibold px-5 py-2.5 rounded-lg hover:bg-highland-deep transition-colors"
+        >
+          <T en="What are nature-based solutions?" rw="Ibisubizo bishingiye ku bidukikije ni ibiki?" />
+        </a>
+        <a
+          href="/map"
+          class="no-underline border border-ink/25 text-ink font-semibold px-5 py-2.5 rounded-lg hover:border-highland hover:text-highland transition-colors"
+        >
+          <T en={t("openFullMap").en} rw={t("openFullMap").rw} />
+        </a>
+      </div>
+    </div>
+    <HillsPanorama class="-mt-10 md:-mt-24" />
+    <ImigongoBand variant="zigzag" color="#d99a2b" bg="var(--color-highland-deep)" height={16} />
+  </section>
+
+  <!-- Headline indicators by theme -->
+  <section class="max-w-6xl mx-auto px-4 py-14" data-reveal>
+    <p class="eyebrow text-highland mb-2">
+      <T en="The story in numbers" rw="Inkuru mu mibare" />
+    </p>
+    <h2 class="headline text-3xl mb-2">
+      <T en={t("headlineIndicators").en} rw={t("headlineIndicators").rw} />
+    </h2>
+    <p class="text-ink/70 mb-7 measure">
+      <T
+        en="Four themes tell the story of nature-based solutions in Kigali. Each theme is a doorway to its indicators, explained in plain language."
+        rw="Ingingo enye zivuga inkuru y'ibisubizo bishingiye ku bidukikije i Kigali. Buri ngingo ikuganisha ku mibare yayo isobanuwe mu rurimi rworoshye."
+      />
+    </p>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {headlines.map(({ indicator }) => indicator && <IndicatorCard indicator={indicator} compact />)}
+    </div>
+  </section>
+
+  <!-- Programme at a glance -->
+  <section class="bg-highland-deep text-paper relative overflow-hidden">
+    <ImigongoBand variant="diamond" color="rgba(217,154,43,0.35)" height={14} />
+    <div class="max-w-6xl mx-auto px-4 py-14 relative" data-reveal>
+      <p class="eyebrow text-gold mb-2">
+        <T en="Programme at a glance" rw="Umushinga mu ncamake" />
+      </p>
+      <h2 class="headline text-3xl text-paper mb-8">
+        <T en="What SUNCASA has delivered so far" rw="Ibyo SUNCASA imaze kugeraho" />
+      </h2>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          glance.map(({ indicator, label }) => (
+            <StatBlock value={indicator.value ?? 0} label={label} />
+          ))
+        }
+      </div>
+      <p class="text-xs text-paper/70 mt-8 leading-relaxed max-w-2xl">
+        <T
+          en="Published SUNCASA Year 2 figures. Every number on this dashboard carries its source, date, and caveats. See the About the data page for the full register."
+          rw="Imibare yatangajwe mu mwaka wa 2 wa SUNCASA. Buri mubare kuri iyi mbonerahamwe ugaragaza inkomoko, itariki n'ibigomba kwitonderwa. Reba paji y'Ibyerekeye imibare kugira ngo ubone urutonde rwuzuye."
+        />
+      </p>
+    </div>
+  </section>
+
+  <!-- The four themes -->
+  <section class="max-w-6xl mx-auto px-4 py-14" data-reveal>
+    <p class="eyebrow text-highland mb-2">
+      <T en="Four communication themes" rw="Ingingo enye z'itumanaho" />
+    </p>
+    <h2 class="headline text-3xl mb-7">
+      <T en="Follow the change, theme by theme" rw="Kurikirana impinduka, ingingo ku yindi" />
+    </h2>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        headlines.map(({ theme, count }) => (
+          <a
+            href={`/themes/${theme.slug}`}
+            class="card-surface relative overflow-hidden no-underline p-6 flex gap-5 items-start group"
+          >
+            <span
+              class="absolute inset-y-0 left-0 w-1"
+              style={`background:${theme.color};`}
+              aria-hidden="true"
+            />
+            <ThemeGlyph theme={theme.slug} size={44} color={theme.color} class="shrink-0 mt-1" />
+            <span class="block">
+              <span class="block headline text-xl text-ink group-hover:text-highland leading-snug">
+                <T en={theme.name.en} rw={theme.name.rw} />
+              </span>
+              <span class="block text-sm text-ink/75 mt-1.5 leading-relaxed">
+                <T en={theme.keyMessage.en} rw={theme.keyMessage.rw} />
+              </span>
+              <span
+                class="inline-block eyebrow mt-3.5 group-hover:translate-x-0.5 transition-transform"
+                style={`color:${theme.color};`}
+              >
+                {count} <T en="indicators" rw="imibare" /> &rarr;
+              </span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Map preview -->
+  <section class="bg-mist/60 border-y border-(--rule)">
+    <div class="max-w-6xl mx-auto px-4 py-14" data-reveal>
+      <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
+        <div>
+          <p class="eyebrow text-highland mb-2">
+            <T en="On the ground" rw="Aho bibera" />
+          </p>
+          <h2 class="headline text-3xl">
+            <T en={t("whereWeWork").en} rw={t("whereWeWork").rw} />
+          </h2>
+          <p class="text-ink/70 measure mt-2">
+            <T
+              en="SUNCASA works in six micro-catchments across Nyarugenge, Kicukiro, and Gasabo districts. Tap a site for its intervention type and area."
+              rw="SUNCASA ikorera mu tukibaya dutandatu two mu turere twa Nyarugenge, Kicukiro na Gasabo. Kanda ahantu urebe ubwoko bw'igikorwa n'ubuso."
+            />
+          </p>
+        </div>
+        <a href="/map" class="no-underline font-semibold text-highland hover:underline">
+          <T en={t("openFullMap").en} rw={t("openFullMap").rw} /> &rarr;
+        </a>
+      </div>
+      <InterventionMap client:only="react" features={sites.features} />
+    </div>
+  </section>
+
+  <!-- Stories -->
+  <section class="max-w-6xl mx-auto px-4 py-14" data-reveal>
+    <div class="flex flex-wrap items-end justify-between gap-3 mb-7">
+      <div>
+        <p class="eyebrow text-highland mb-2">
+          <T en="Beyond the numbers" rw="Hakurya y'imibare" />
+        </p>
+        <h2 class="headline text-3xl">
+          <T en={t("storiesTitle").en} rw={t("storiesTitle").rw} />
+        </h2>
+        <p class="text-ink/70 measure mt-2">
+          <T
+            en="Data tells you what changed. Stories tell you what it felt like. Every story is clearly labelled, and approved narratives come from the SUNCASA team."
+            rw="Imibare ikubwira icyahindutse. Inkuru zikubwira uko byumvikanaga. Buri nkuru igaragazwa neza, kandi inkuru zemejwe zitangwa n'itsinda rya SUNCASA."
+          />
+        </p>
+      </div>
+      <a href="/stories" class="no-underline font-semibold text-highland hover:underline">
+        <T en={t("viewAllStories").en} rw={t("viewAllStories").rw} /> &rarr;
+      </a>
+    </div>
+    <div class="grid gap-5 md:grid-cols-3">
+      {stories.map((story) => <StoryCard story={story} />)}
+    </div>
+  </section>
+
+  <!-- Co-design invitation -->
+  <section class="max-w-6xl mx-auto px-4 pb-16" data-reveal>
+    <div class="card-surface relative overflow-hidden p-8 md:p-10">
+      <ImigongoBand
+        variant="zigzag"
+        color="rgba(155,61,34,0.5)"
+        height={10}
+        class="absolute inset-x-0 top-0"
+      />
+      <div class="grid gap-6 md:grid-cols-3 md:items-center pt-2">
+        <div class="md:col-span-2">
+          <p class="eyebrow text-ochre mb-2">
+            <T en="An open invitation" rw="Ubutumire" />
+          </p>
+          <h2 class="headline text-2xl md:text-3xl mb-3">
+            <T en="Built with Kigali, for Kigali" rw="Yubatswe hamwe na Kigali, ku bwa Kigali" />
+          </h2>
+          <p class="text-ink/75 leading-relaxed measure">
+            <T
+              en="This dashboard is designed for students, teachers, and the communities of the watershed, and it is shaped together with the Rwanda Forestry Authority, the City of Kigali, and SUNCASA partners. Learn what nature-based solutions are, or read how every figure is prepared."
+              rw="Iyi mbonerahamwe yateguriwe abanyeshuri, abarimu n'imiryango yo mu kibaya, kandi ikorwa ku bufatanye n'Ikigo cy'Amashyamba mu Rwanda, Umujyi wa Kigali n'abafatanyabikorwa ba SUNCASA. Menya ibisubizo bishingiye ku bidukikije, cyangwa usome uko buri mubare utegurwa."
+            />
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 md:items-end">
+          <a
+            href="/learn"
+            class="no-underline bg-highland text-paper font-semibold px-5 py-2.5 rounded-lg hover:bg-highland-deep transition-colors text-center w-full md:w-auto"
+          >
+            <T en="Start learning" rw="Tangira kwiga" />
+          </a>
+          <a
+            href="/methodology"
+            class="no-underline border border-ink/25 text-ink font-semibold px-5 py-2.5 rounded-lg hover:border-highland hover:text-highland transition-colors text-center w-full md:w-auto"
+          >
+            <T en="How the figures are prepared" rw="Uko imibare itegurwa" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

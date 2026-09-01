@@ -1,0 +1,98 @@
+---
+/**
+ * Bespoke hero scenery: the thousand hills of Kigali in layered mist,
+ * with the Nyabarongo ribbon winding through the valley floor and a
+ * low ochre sun. Pure inline SVG with a soft grain texture, a few KB,
+ * aria-hidden, no animation.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+const uid = Math.random().toString(36).slice(2, 8);
+---
+
+<div class={`pointer-events-none select-none ${className}`} aria-hidden="true" style="line-height:0;">
+  <svg
+    viewBox="0 0 1440 430"
+    width="100%"
+    preserveAspectRatio="xMidYMax slice"
+    role="presentation"
+    focusable="false"
+    style="display:block;"
+  >
+    <defs>
+      <linearGradient id={`sky-${uid}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#faf7f0" />
+        <stop offset="72%" stop-color="#f3ecdd" />
+        <stop offset="100%" stop-color="#ece2cc" />
+      </linearGradient>
+      <linearGradient id={`far-${uid}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#175943" stop-opacity="0.16" />
+        <stop offset="100%" stop-color="#175943" stop-opacity="0.08" />
+      </linearGradient>
+      <linearGradient id={`mid-${uid}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#175943" stop-opacity="0.38" />
+        <stop offset="100%" stop-color="#175943" stop-opacity="0.22" />
+      </linearGradient>
+      <linearGradient id={`near-${uid}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#14523c" stop-opacity="0.78" />
+        <stop offset="100%" stop-color="#0f3d2e" stop-opacity="0.92" />
+      </linearGradient>
+      <filter id={`grain-${uid}`}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.05" />
+        </feComponentTransfer>
+        <feComposite operator="over" in2="SourceGraphic" />
+      </filter>
+    </defs>
+
+    <!-- Sky -->
+    <rect width="1440" height="430" fill={`url(#sky-${uid})`}></rect>
+
+    <!-- Low ochre sun -->
+    <circle cx="1082" cy="128" r="58" fill="#d99a2b" opacity="0.5"></circle>
+    <circle cx="1082" cy="128" r="86" fill="#d99a2b" opacity="0.12"></circle>
+
+    <!-- Far ridge -->
+    <path
+      d="M0 232 L120 196 Q190 176 260 200 L390 246 Q460 268 540 240 L700 186 Q760 166 830 190 L980 244 Q1060 272 1140 236 L1280 178 Q1340 154 1440 190 L1440 430 L0 430 Z"
+      fill={`url(#far-${uid})`}
+    ></path>
+
+    <!-- Middle ridge -->
+    <path
+      d="M0 300 L90 268 Q170 240 250 270 L400 322 Q470 344 560 312 L720 258 Q800 232 890 264 L1040 316 Q1120 342 1210 306 L1350 252 Q1400 234 1440 250 L1440 430 L0 430 Z"
+      fill={`url(#mid-${uid})`}
+    ></path>
+
+    <!-- Nyabarongo ribbon, winding through the valley -->
+    <path
+      d="M-20 358 Q180 330 340 352 Q520 378 660 350 Q820 320 960 348 Q1120 380 1260 352 Q1360 334 1460 348"
+      fill="none"
+      stroke="#31658c"
+      stroke-width="18"
+      stroke-linecap="round"
+      opacity="0.34"
+    ></path>
+    <path
+      d="M-20 358 Q180 330 340 352 Q520 378 660 350 Q820 320 960 348 Q1120 380 1260 352 Q1360 334 1460 348"
+      fill="none"
+      stroke="#31658c"
+      stroke-width="7"
+      stroke-linecap="round"
+      opacity="0.8"
+    ></path>
+
+    <!-- Near hills -->
+    <path
+      d="M0 402 L110 366 Q200 338 300 368 L470 418 L560 388 Q660 352 760 384 L930 430 L1010 402 Q1110 366 1220 396 L1360 428 Q1400 436 1440 424 L1440 430 L0 430 Z"
+      fill={`url(#near-${uid})`}
+    ></path>
+
+    <!-- Grain wash for a printed, non-digital feel -->
+    <rect width="1440" height="430" filter={`url(#grain-${uid})`} opacity="0.55" fill="transparent"></rect>
+  </svg>
+</div>

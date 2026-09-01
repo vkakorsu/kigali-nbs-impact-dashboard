@@ -1,0 +1,127 @@
+{
+  "type": "FeatureCollection",
+  "name": "suncasa_kigali_intervention_sites",
+  "crs_note": "Coordinates are WGS84 (EPSG:4326) for web display. Source geometries from RFA and FMES arrive in ITRF2005 / TM Rwanda and are transformed on ingest. Locations below are illustrative placeholders pending approved SUNCASA spatial data.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc1-riparian",
+        "name_en": "Riparian restoration, micro-catchment 1",
+        "name_rw": "Gusubiza ubuzima inkengero z'umugezi, agakibaya ka 1",
+        "district": "Nyarugenge",
+        "intervention_en": "Riparian restoration",
+        "intervention_rw": "Gusubiza ubuzima inkengero z'umugezi",
+        "theme": "climate-adaptation",
+        "area_ha": 45,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.005, -1.975] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc2-agroforestry",
+        "name_en": "Agroforestry plots, micro-catchment 2",
+        "name_rw": "Ubuhinzi-mashyamba, agakibaya ka 2",
+        "district": "Gasabo",
+        "intervention_en": "Agroforestry",
+        "intervention_rw": "Ubuhinzi-mashyamba",
+        "theme": "employment-economy",
+        "area_ha": 320,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.115, -1.905] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc3-afforestation",
+        "name_en": "Afforestation, micro-catchment 3",
+        "name_rw": "Gutera amashyamba, agakibaya ka 3",
+        "district": "Kicukiro",
+        "intervention_en": "Afforestation",
+        "intervention_rw": "Gutera amashyamba",
+        "theme": "environmental-protection",
+        "area_ha": 180,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.085, -2.035] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc4-urban-trees",
+        "name_en": "Urban tree planting, central Kigali",
+        "name_rw": "Gutera ibiti mu mujyi, Kigali rwagati",
+        "district": "Nyarugenge",
+        "intervention_en": "Urban tree planting",
+        "intervention_rw": "Gutera ibiti mu mujyi",
+        "theme": "environmental-protection",
+        "trees": 12000,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.058, -1.95] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc5-riparian",
+        "name_en": "Riparian buffer, micro-catchment 5",
+        "name_rw": "Inkengero z'umugezi, agakibaya ka 5",
+        "district": "Kicukiro",
+        "intervention_en": "Riparian restoration",
+        "intervention_rw": "Gusubiza ubuzima inkengero z'umugezi",
+        "theme": "climate-adaptation",
+        "area_ha": 60,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.045, -2.045] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc6-reforestation",
+        "name_en": "Reforestation, micro-catchment 6",
+        "name_rw": "Gusubiranya amashyamba, agakibaya ka 6",
+        "district": "Gasabo",
+        "intervention_en": "Reforestation",
+        "intervention_rw": "Gusubiranya amashyamba",
+        "theme": "environmental-protection",
+        "area_ha": 240,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.145, -1.885] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc1-terracing",
+        "name_en": "Erosion control terraces, micro-catchment 1",
+        "name_rw": "Amaterasi arwanya isuri, agakibaya ka 1",
+        "district": "Nyarugenge",
+        "intervention_en": "Erosion control",
+        "intervention_rw": "Kurwanya isuri",
+        "theme": "climate-adaptation",
+        "area_ha": 95,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [29.985, -2.0] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "mc4-agroforestry",
+        "name_en": "Agroforestry plots, micro-catchment 4",
+        "name_rw": "Ubuhinzi-mashyamba, agakibaya ka 4",
+        "district": "Kicukiro",
+        "intervention_en": "Agroforestry",
+        "intervention_rw": "Ubuhinzi-mashyamba",
+        "theme": "employment-economy",
+        "area_ha": 150,
+        "illustrative": true
+      },
+      "geometry": { "type": "Point", "coordinates": [30.12, -2.06] }
+    }
+  ]
+}
