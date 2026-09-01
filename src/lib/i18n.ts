@@ -39,6 +39,8 @@ export const ui: Record<string, Bilingual> = {
   english: { en: "English", rw: "Icyongereza" },
   kinyarwanda: { en: "Kinyarwanda", rw: "Ikinyarwanda" },
   skipToContent: { en: "Skip to main content", rw: "Simbukira ku bikubiyemo" },
+  openMenu: { en: "Open menu", rw: "Fungura urutonde" },
+  closeMenu: { en: "Close menu", rw: "Funga urutonde" },
   headlineIndicators: { en: "Headline indicators", rw: "Imibare y'ingenzi" },
   viewIndicator: { en: "View indicator", rw: "Reba iyi mibare" },
   viewTheme: { en: "Explore this theme", rw: "Reba iyi ngingo" },

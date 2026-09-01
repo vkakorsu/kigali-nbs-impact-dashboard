@@ -247,6 +247,25 @@ button:focus-visible,
   left: 0;
 }
 
+/* Hamburger: native details/summary, no extra JS to open or close. */
+.menu-toggle {
+  list-style: none;
+}
+.menu-toggle::-webkit-details-marker,
+.menu-toggle::marker {
+  display: none;
+  content: "";
+}
+.menu-toggle:focus-visible {
+  outline: 3px solid var(--color-ochre);
+  outline-offset: 2px;
+}
+@media (max-width: 1023px) {
+  html:has(#site-menu[open]) {
+    overflow: hidden;
+  }
+}
+
 /* ---------------------------------------------------------------- */
 /* Motion. Reveal and count-up are presentation polish only.         */
 /* The hidden state is applied exclusively under html.motion-ok,     */

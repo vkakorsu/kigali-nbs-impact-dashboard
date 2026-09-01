@@ -76,11 +76,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     </a>
 
     <header
-      class="sticky top-0 z-40 border-b border-(--rule)"
+      class="relative sticky top-0 z-40 border-b border-(--rule)"
       style="background: rgba(250, 247, 240, 0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);"
     >
-      <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center gap-x-6 gap-y-2">
-        <a href="/" class="flex items-center gap-2.5 no-underline group">
+      <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2.5 no-underline group min-w-0 flex-1 lg:flex-none">
           <svg
             width="30"
             height="30"
@@ -99,8 +99,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
               stroke-width="4"
               stroke-linecap="square"></path>
           </svg>
-          <span class="leading-tight">
-            <span class="block font-semibold text-highland-deep text-sm group-hover:text-highland">
+          <span class="leading-tight min-w-0">
+            <span class="block font-semibold text-highland-deep text-sm group-hover:text-highland truncate">
               <T en="Kigali NbS Impact Dashboard" rw="Imbonerahamwe y'ibisubizo bishingiye ku bidukikije i Kigali" />
             </span>
             <span class="hidden sm:block text-[0.62rem] uppercase tracking-[0.14em] text-ink/70 font-medium">
@@ -108,16 +108,14 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
             </span>
           </span>
         </a>
-        <nav
-          class="flex flex-wrap items-center gap-x-4 gap-y-1 ml-auto"
-          aria-label="Main"
-        >
+
+        <nav class="hidden lg:flex items-center gap-x-4 ml-auto" aria-label="Main">
           {
             nav.map((item) => (
               <a
                 href={item.href}
                 aria-current={currentPath === item.href ? "page" : undefined}
-                class={`no-underline text-xs font-semibold uppercase tracking-[0.08em] pb-0.5 border-b-2 transition-colors hover:text-highland ${
+                class={`no-underline text-xs font-semibold uppercase tracking-[0.08em] pb-0.5 border-b-2 transition-colors hover:text-highland whitespace-nowrap ${
                   currentPath === item.href
                     ? "text-highland border-gold"
                     : "text-ink/70 border-transparent"
@@ -129,6 +127,64 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
           }
           <LanguageToggle client:load />
         </nav>
+
+        <details id="site-menu" class="group lg:hidden shrink-0">
+          <summary class="menu-toggle list-none cursor-pointer w-11 h-11 grid place-items-center rounded-lg border border-ink/20 bg-paper text-highland-deep hover:border-highland/40 hover:bg-mist">
+            <span class="sr-only group-open:hidden">
+              <T en={t("openMenu").en} rw={t("openMenu").rw} />
+            </span>
+            <span class="sr-only hidden group-open:block">
+              <T en={t("closeMenu").en} rw={t("closeMenu").rw} />
+            </span>
+            <svg
+              class="group-open:hidden"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="square"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16"></path>
+            </svg>
+            <svg
+              class="hidden group-open:block"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="square"
+              aria-hidden="true"
+            >
+              <path d="M6 6l12 12M18 6L6 18"></path>
+            </svg>
+          </summary>
+          <nav
+            class="absolute left-0 right-0 top-full z-50 border-b border-(--rule) px-4 py-4 flex flex-col gap-1 bg-paper shadow-[0_12px_28px_-12px_rgba(26,23,20,0.28)]"
+            aria-label="Main"
+          >
+            {
+              nav.map((item) => (
+                <a
+                  href={item.href}
+                  aria-current={currentPath === item.href ? "page" : undefined}
+                  class={`no-underline text-sm font-semibold py-2.5 px-1 border-b border-(--rule) ${
+                    currentPath === item.href ? "text-highland" : "text-ink/80"
+                  }`}
+                >
+                  <T en={t(item.key).en} rw={t(item.key).rw} />
+                </a>
+              ))
+            }
+            <div class="pt-3">
+              <LanguageToggle client:load />
+            </div>
+          </nav>
+        </details>
       </div>
     </header>
 
@@ -175,6 +231,17 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
       </div>
     </footer>
 
+    <script is:inline>
+      // Close the mobile menu on Escape. Opening and closing still work
+      // with no JavaScript, via the native details element.
+      (function () {
+        document.addEventListener("keydown", function (event) {
+          if (event.key !== "Escape") return;
+          var menu = document.getElementById("site-menu");
+          if (menu) menu.removeAttribute("open");
+        });
+      })();
+    </script>
     <script is:inline>
       // Presentation polish only: reveal-on-scroll and stat count-up.
       // Runs solely when html.motion-ok was set (JS available, no
