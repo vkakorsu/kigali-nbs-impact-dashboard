@@ -208,7 +208,7 @@
       "provider": "SUNCASA project team (IISD and WRI)",
       "definition_en": "Jobs created through SUNCASA activities including nurseries, planting crews, terracing, and agroforestry, disaggregated by gender and age.",
       "why_en": "Green jobs make restoration self-interested, in the best way. When wages flow from the watershed's recovery, the watershed gains a workforce of defenders.",
-      "caveats_en": "Illustrative value with illustrative disaggregation (58 percent women, 47 percent youth). Final figures come from validated SUNCASA reporting.",
+      "caveats_en": "Illustrative value with illustrative disaggregation (58 percent women, 47 percent youth). For context, the SAVi assessment for Kigali (IISD, 2026) projects about 3,062 jobs during implementation and roughly 1,900 ongoing maintenance roles through 2050; those are modelled projections, not monitoring actuals. Final monitoring figures come from validated SUNCASA reporting.",
       "illustrative": true,
       "disaggregation": {
         "women_share": 0.58,

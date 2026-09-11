@@ -3,10 +3,6 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "types": ["astro/client"]
   },
   "include": ["src/**/*", "scripts/**/*"],
